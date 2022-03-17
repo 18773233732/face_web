@@ -1,43 +1,14 @@
 import { defineConfig } from 'umi';
+import routes from './routes';
 
 export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [
-    { path: '/dashboard', routes: [{}] },
-    {
-      path: '/yao1',
-      component: '@/pages/index',
-      name: 'yao',
-      icon: 'DashboardOutlined',
-    },
-    {
-      path: '/yao2',
-      component: '@/pages/index',
-      name: 'yao',
-      routes: [
-        {
-          path: '/yao2/yao21',
-          component: '@/pages/index',
-          name: 'yao',
-        },
-        {
-          path: '/yao2/yao22',
-          component: '@/pages/index',
-          name: 'yao',
-        },
-      ],
-    },
-    {
-      path: '/yao3',
-      component: '@/pages/index',
-      name: 'yao',
-    },
-  ],
   fastRefresh: {},
+  routes,
   layout: {
-    navTheme: 'light',
+    navTheme: 'dark',
     primaryColor: '#F5222D',
     layout: 'mix',
     contentWidth: 'Fluid',
