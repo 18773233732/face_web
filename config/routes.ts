@@ -49,6 +49,18 @@
     component: './TableList',
   },
   {
+    name: '新建测试',
+    icon: 'table',
+    path: '/addtest',
+    component: './AddTest',
+  },
+  {
+    name: '新建测试2',
+    icon: 'table',
+    path: '/addtest2',
+    component: './AddTest2',
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },

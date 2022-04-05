@@ -1,22 +1,5 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "importHelpers": true,
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "baseUrl": "./",
-    "strict": true,
-    "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"]
-    },
-    "allowSyntheticDefaultImports": true
-=======
     "outDir": "build/dist",
     "module": "esnext",
     "target": "esnext",
@@ -39,28 +22,10 @@
       "@/*": ["./src/*"],
       "@@/*": ["./src/.umi/*"]
     }
->>>>>>> master
   },
   "include": [
     "mock/**/*",
     "src/**/*",
-<<<<<<< HEAD
-    "config/**/*",
-    ".umirc.ts",
-    "typings.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "es",
-    "dist",
-    "typings",
-    "**/__test__",
-    "test",
-    "docs",
-    "tests"
-  ]
-=======
     "playwright.config.ts",
     "tests/**/*",
     "test/**/*",
@@ -73,6 +38,13 @@
     "jest.config.js",
     "mock/*"
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "src/.umi/*", "webpack", "jest"]
->>>>>>> master
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    "src/.umi/*",
+    "webpack",
+    "jest"
+  ]
 }
