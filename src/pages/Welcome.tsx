@@ -16,7 +16,9 @@ const Welcome: React.FC = () => {
     <PageContainer>
       <Card>
         <Alert
-          message={'Faster and stronger heavy-duty components have been released.'}
+          message={
+            'Faster and stronger heavy-duty components have been released.'
+          }
           type="success"
           showIcon
           banner

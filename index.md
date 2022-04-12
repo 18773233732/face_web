@@ -120,14 +120,16 @@ export default () => {
   const list = [
     {
       id: '000000001',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
+      avatar:
+        'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
       title: '你收到了 14 份新周报',
       datetime: '2017-08-09',
       type: 'notification',
     },
     {
       id: '000000002',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
+      avatar:
+        'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
       title: '你推荐的 曲妮妮 已通过第三轮面试',
       datetime: '2017-08-08',
       type: 'notification',
@@ -177,20 +179,20 @@ export default () => {
 
 ### NoticeIcon API
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| count | 有多少未读通知 | `number` | - |
-| bell | 铃铛的图表 | `ReactNode` | - |
-| onClear | 点击清空数据按钮 | `(tabName: string, tabKey: string) => void` | - |
-| onItemClick | 未读消息列被点击 | `(item: API.NoticeIconData, tabProps: NoticeIconTabProps) => void` | - |
-| onViewMore | 查看更多的按钮点击 | `(tabProps: NoticeIconTabProps, e: MouseEvent) => void` | - |
-| onTabChange | 通知 Tab 的切换 | `(tabTile: string) => void;` | - |
-| popupVisible | 通知显示是否展示 | `boolean` | - |
-| onPopupVisibleChange | 通知信息显示隐藏的回调函数 | `(visible: boolean) => void` | - |
-| clearText | 清空按钮的文字 | `string` | - |
-| viewMoreText | 查看更多的按钮文字 | `string` | - |
-| clearClose | 展示清空按钮 | `boolean` | - |
-| emptyImage | 列表为空时的兜底展示 | `ReactNode` | - |
+| 参数                 | 说明                       | 类型                                                               | 默认值 |
+| -------------------- | -------------------------- | ------------------------------------------------------------------ | ------ |
+| count                | 有多少未读通知             | `number`                                                           | -      |
+| bell                 | 铃铛的图表                 | `ReactNode`                                                        | -      |
+| onClear              | 点击清空数据按钮           | `(tabName: string, tabKey: string) => void`                        | -      |
+| onItemClick          | 未读消息列被点击           | `(item: API.NoticeIconData, tabProps: NoticeIconTabProps) => void` | -      |
+| onViewMore           | 查看更多的按钮点击         | `(tabProps: NoticeIconTabProps, e: MouseEvent) => void`            | -      |
+| onTabChange          | 通知 Tab 的切换            | `(tabTile: string) => void;`                                       | -      |
+| popupVisible         | 通知显示是否展示           | `boolean`                                                          | -      |
+| onPopupVisibleChange | 通知信息显示隐藏的回调函数 | `(visible: boolean) => void`                                       | -      |
+| clearText            | 清空按钮的文字             | `string`                                                           | -      |
+| viewMoreText         | 查看更多的按钮文字         | `string`                                                           | -      |
+| clearClose           | 展示清空按钮               | `boolean`                                                          | -      |
+| emptyImage           | 列表为空时的兜底展示       | `ReactNode`                                                        | -      |
 
 ### NoticeIcon.Tab API
 
@@ -236,7 +238,10 @@ RightContent 是以上几个组件的组合，同时新增了 plugins 的 `Selec
     placeholder="站内搜索"
     defaultValue="umi ui"
     options={[
-      { label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>, value: 'umi ui' },
+      {
+        label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>,
+        value: 'umi ui',
+      },
       {
         label: <a href="next.ant.design">Ant Design</a>,
         value: 'Ant Design',

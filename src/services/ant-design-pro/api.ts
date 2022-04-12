@@ -1,13 +1,16 @@
 // @ts-ignore
 /* eslint-disable */
-import { request } from 'umi';
+import request from '@/utils/request';
+// import { omit } from 'lodash';
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<{
-    data: API.CurrentUser;
-  }>('/api/currentUser', {
-    method: 'GET',
+  return request<API.GetUserInfo>('/api/getUserInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: options,
     ...(options || {}),
   });
 }
@@ -29,9 +32,24 @@ export async function outLogin(options?: { [key: string]: any }) {
   });
 }
 
+/** 图片上传接口 POST /api/upload_pic */
+export async function uploadPic(body: any, options?: { [key: string]: any }) {
+  return request<any>('/api/upload_pic', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 登录接口 POST /api/login/account */
-export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/login/account', {
+export async function login(
+  body: API.LoginParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.LoginResult>('/api/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

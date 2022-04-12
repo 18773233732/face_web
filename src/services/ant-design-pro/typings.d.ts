@@ -3,30 +3,43 @@
 
 declare namespace API {
   type CurrentUser = {
-    name?: string;
-    avatar?: string;
-    userid?: string;
-    email?: string;
-    signature?: string;
-    title?: string;
-    group?: string;
-    tags?: { key?: string; label?: string }[];
-    notifyCount?: number;
-    unreadCount?: number;
-    country?: string;
-    access?: string;
-    geographic?: {
-      province?: { label?: string; key?: string };
-      city?: { label?: string; key?: string };
+    name: string;
+    // avatar?: string;
+    id: number;
+    // email?: string;
+    // signature?: string;
+    // title?: string;
+    // group?: string;
+    // tags?: { key?: string; label?: string }[];
+    // notifyCount?: number;
+    // unreadCount?: number;
+    // country?: string;
+    // access?: string;
+    date?: string;
+    geographic: {
+      province: string;
+      city: string;
+      position: string;
     };
-    address?: string;
-    phone?: string;
+    // address?: string;
+    phone: string;
   };
 
   type LoginResult = {
-    status?: string;
-    type?: string;
-    currentAuthority?: string;
+    success: boolean;
+    data: {
+      token: string;
+      userData: CurrentUser;
+    };
+    errorMessage: string;
+  };
+
+  type GetUserInfo = {
+    success: boolean;
+    data: {
+      userInfo: CurrentUser;
+    };
+    errorMessage: string;
   };
 
   type PageParams = {

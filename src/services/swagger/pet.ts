@@ -3,7 +3,10 @@
 import { request } from 'umi';
 
 /** Update an existing pet PUT /pet */
-export async function updatePet(body: API.Pet, options?: { [key: string]: any }) {
+export async function updatePet(
+  body: API.Pet,
+  options?: { [key: string]: any },
+) {
   return request<any>('/pet', {
     method: 'PUT',
     headers: {
@@ -99,7 +102,10 @@ export async function updatePetWithForm(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(ele, typeof item === 'object' ? JSON.stringify(item) : item);
+      formData.append(
+        ele,
+        typeof item === 'object' ? JSON.stringify(item) : item,
+      );
     }
   });
 
@@ -150,7 +156,10 @@ export async function uploadFile(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(ele, typeof item === 'object' ? JSON.stringify(item) : item);
+      formData.append(
+        ele,
+        typeof item === 'object' ? JSON.stringify(item) : item,
+      );
     }
   });
 

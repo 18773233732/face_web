@@ -9,7 +9,12 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import {
+  rule,
+  addRule,
+  updateRule,
+  removeRule,
+} from '@/services/ant-design-pro/api';
 
 /**
  * @en-US Add node
@@ -88,7 +93,8 @@ const TableList: React.FC = () => {
    * @en-US The pop-up window of the distribution update window
    * @zh-CN 分布更新窗口的弹窗
    * */
-  const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
+  const [updateModalVisible, handleUpdateModalVisible] =
+    useState<boolean>(false);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
 
@@ -165,7 +171,12 @@ const TableList: React.FC = () => {
           return false;
         }
         if (`${status}` === '3') {
-          return <Input {...rest} placeholder={'Please enter the reason for the exception!'} />;
+          return (
+            <Input
+              {...rest}
+              placeholder={'Please enter the reason for the exception!'}
+            />
+          );
         }
         return defaultRender(item);
       },
@@ -223,10 +234,13 @@ const TableList: React.FC = () => {
         <FooterToolbar
           extra={
             <div>
-              Chosen <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项 &nbsp;&nbsp;
+              Chosen{' '}
+              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项
+              &nbsp;&nbsp;
               <span>
                 Total number of service calls{' '}
-                {selectedRowsState.reduce((pre, item) => pre + item.callNo!, 0)} 万
+                {selectedRowsState.reduce((pre, item) => pre + item.callNo!, 0)}{' '}
+                万
               </span>
             </div>
           }

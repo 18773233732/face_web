@@ -3,7 +3,10 @@
 import { request } from 'umi';
 
 /** Create user This can only be done by the logged in user. POST /user */
-export async function createUser(body: API.User, options?: { [key: string]: any }) {
+export async function createUser(
+  body: API.User,
+  options?: { [key: string]: any },
+) {
   return request<any>('/user', {
     method: 'POST',
     data: body,
@@ -24,7 +27,10 @@ export async function createUsersWithArrayInput(
 }
 
 /** Creates list of users with given input array POST /user/createWithList */
-export async function createUsersWithListInput(body: API.User[], options?: { [key: string]: any }) {
+export async function createUsersWithListInput(
+  body: API.User[],
+  options?: { [key: string]: any },
+) {
   return request<any>('/user/createWithList', {
     method: 'POST',
     data: body,

@@ -34,7 +34,10 @@ let tableListDataSource = genList(1, 100);
 
 function getRule(req: Request, res: Response, u: string) {
   let realUrl = u;
-  if (!realUrl || Object.prototype.toString.call(realUrl) !== '[object String]') {
+  if (
+    !realUrl ||
+    Object.prototype.toString.call(realUrl) !== '[object String]'
+  ) {
     realUrl = req.url;
   }
   const { current = 1, pageSize = 10 } = req.query;
@@ -90,7 +93,9 @@ function getRule(req: Request, res: Response, u: string) {
   }
 
   if (params.name) {
-    dataSource = dataSource.filter((data) => data?.name?.includes(params.name || ''));
+    dataSource = dataSource.filter((data) =>
+      data?.name?.includes(params.name || ''),
+    );
   }
   const result = {
     data: dataSource,
@@ -105,7 +110,10 @@ function getRule(req: Request, res: Response, u: string) {
 
 function postRule(req: Request, res: Response, u: string, b: Request) {
   let realUrl = u;
-  if (!realUrl || Object.prototype.toString.call(realUrl) !== '[object String]') {
+  if (
+    !realUrl ||
+    Object.prototype.toString.call(realUrl) !== '[object String]'
+  ) {
     realUrl = req.url;
   }
 
@@ -115,7 +123,9 @@ function postRule(req: Request, res: Response, u: string, b: Request) {
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
-      tableListDataSource = tableListDataSource.filter((item) => key.indexOf(item.key) === -1);
+      tableListDataSource = tableListDataSource.filter(
+        (item) => key.indexOf(item.key) === -1,
+      );
       break;
     case 'post':
       (() => {
