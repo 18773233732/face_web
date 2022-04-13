@@ -11,6 +11,11 @@
             path: '/user/login',
             component: './user/Login',
           },
+          {
+            name: 'logon',
+            path: '/user/logon',
+            component: './user/Logon',
+          },
         ],
       },
       {

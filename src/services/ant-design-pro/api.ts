@@ -1,11 +1,12 @@
 // @ts-ignore
 /* eslint-disable */
-import request from '@/utils/request';
+// import request from '@/utils/request';
+import { request } from 'umi';
 // import { omit } from 'lodash';
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<API.GetUserInfo>('/api/getUserInfo', {
+  return request<API.GetUserInfo>('/api/user/selectList', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ export async function login(
   body: API.LoginParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.LoginResult>('/api/login', {
+  return request<API.LoginResult>('/api/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

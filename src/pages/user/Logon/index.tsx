@@ -71,8 +71,14 @@ const Login: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          title="牙科诊所预约系统登录"
+          title="牙科诊所预约系统注册"
           subTitle={'牙科诊所预约系统'}
+          submitter={{
+            // 配置按钮文本
+            searchConfig: {
+              submitText: '注册',
+            },
+          }}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
