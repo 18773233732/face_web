@@ -60,6 +60,8 @@
     "china-division": "^2.5.0",
     "classnames": "^2.3.0",
     "cssesc": "^3.0.0",
+    "echarts": "^5.3.2",
+    "echarts-for-react": "^3.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "omit.js": "^2.0.2",

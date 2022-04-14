@@ -24,6 +24,15 @@ export async function getTestData(options?: { [key: string]: any }) {
   });
 }
 
+export async function getDeviceInfo(options?: { [key: string]: any }) {
+  return request<{
+    data: any;
+  }>('/api/getMyDeviceInfo', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 退出登录接口 POST /api/login/outLogin */
 export async function outLogin(options?: { [key: string]: any }) {
   return request<Record<string, any>>('/api/login/outLogin', {

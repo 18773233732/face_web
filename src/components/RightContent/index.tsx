@@ -21,7 +21,7 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <Space className={className}>
-      <Avatar />
+      <Avatar menu />
     </Space>
   );
 };
