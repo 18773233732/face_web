@@ -13,6 +13,7 @@ import {
   ProFormCheckbox,
   ProFormText,
   LoginForm,
+  ProFormRadio,
 } from '@ant-design/pro-form';
 import { history, useModel } from 'umi';
 import Footer from '@/components/Footer';
@@ -56,6 +57,7 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
+      // console.log(msg, 111)
       if (msg.data?.userData?.id) {
         message.success('登录成功');
         window.localStorage.setItem('token', msg.data.token);
@@ -68,6 +70,8 @@ const Login: React.FC = () => {
         // console.log(msg.data.token);
         history.push('/');
         return;
+      } else {
+        message.error('登录失败，请重试！');
       }
       // 如果失败去设置用户错误信息
       // setUserLoginState(msg);
@@ -139,6 +143,24 @@ const Login: React.FC = () => {
                   {
                     required: true,
                     message: '请输入密码！',
+                  },
+                ]}
+              />
+              <ProFormRadio.Group
+                name="radio"
+                label="Radio.Group"
+                options={[
+                  {
+                    label: 'item 1',
+                    value: 'a',
+                  },
+                  {
+                    label: 'item 2',
+                    value: 'b',
+                  },
+                  {
+                    label: 'item 3',
+                    value: 'c',
                   },
                 ]}
               />
