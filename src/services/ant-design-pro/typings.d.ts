@@ -13,11 +13,9 @@ declare namespace API {
   };
 
   type LoginResult = {
-    success: boolean;
-    data: {
-      userData: CurrentUser;
-    };
-    errorMessage: string;
+    status: number;
+    data: CurrentUser;
+    msg: string;
   };
 
   type GetUserInfo = {

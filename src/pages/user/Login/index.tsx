@@ -5,6 +5,7 @@ import { ProFormText, LoginForm, ProFormRadio } from '@ant-design/pro-form';
 import { history, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
+import './index.less';
 // import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 
 import styles from './index.less';
@@ -46,12 +47,18 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await login({ ...values });
-      if (msg.data?.userData?.userId) {
+      if (msg.data?.userId) {
         message.success('登录成功');
         // window.localStorage.setItem('token', msg.data.token);
         // await fetchUserInfo();
         setUserLoginState(msg);
-        setInitialState({ currentUser: msg.data.userData });
+        // setInitialState({ currentUser: msg.data });
+        localStorage.setItem('userData', JSON.stringify(msg.data));
+        await setInitialState((s) => ({
+          ...s,
+          currentUser: msg.data,
+        }));
+        // console.log(initialState?.currentUser)
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         // const { query } = history.location;
@@ -66,7 +73,7 @@ const Login: React.FC = () => {
       message.error('登录失败，请重试！');
     }
   };
-  const { errorMessage } = userLoginState;
+  const { msg } = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -77,21 +84,21 @@ const Login: React.FC = () => {
             await handleSubmit(values as API.LoginParams);
           }}
         >
-          {errorMessage === 'login_failed' && (
+          {msg === 'login_failed' && (
             <LoginMessage content={'账户或密码错误'} />
           )}
           <>
             <ProFormText
-              name="username"
+              name="userId"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={'用户名'}
+              placeholder={'用户Id'}
               rules={[
                 {
                   required: true,
-                  message: '请输入用户名!',
+                  message: '请输入用户Id!',
                 },
               ]}
             />

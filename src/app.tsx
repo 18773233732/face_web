@@ -7,7 +7,6 @@ import Footer from '@/components/Footer';
 import defaultSettings from '../config/defaultSettings';
 
 const loginPath = '/user/login';
-
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <PageLoading />,
@@ -22,15 +21,10 @@ export async function getInitialState(): Promise<{
   loading?: boolean;
 }> {
   // 如果是登录页面，不执行
-  if (history.location.pathname !== loginPath) {
-    // console.log(currentUser);
-    return {
-      currentUser: {},
-      settings: defaultSettings,
-    };
-  }
+  const userData = JSON.parse(localStorage.getItem('userData') || '');
   return {
     settings: defaultSettings,
+    currentUser: userData,
   };
 }
 
@@ -44,11 +38,16 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
-      // const { location } = history;
+      const { location } = history;
       // 如果没有登录，重定向到 login
-      // if (!initialState?.currentUser?.userId && location.pathname !== loginPath) {
-      //   history.push(loginPath);
-      // }
+      if (
+        !initialState?.currentUser?.userId &&
+        location.pathname !== loginPath
+      ) {
+        console.log(initialState?.currentUser?.userId, location.pathname);
+        // console.log('跳转');
+        history.push(loginPath);
+      }
     },
     menuHeaderRender: undefined,
     // 自定义 403 页面
