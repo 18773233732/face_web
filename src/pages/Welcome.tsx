@@ -17,7 +17,7 @@ const Welcome: React.FC = () => {
       <Card>
         <Alert
           message={
-            'Faster and stronger heavy-duty components have been released.'
+            '诊所使用的牙医排班和牙科服务预订系统。软件改善了预约体验，自动发送短信和电子邮件提醒，帮助管理患者数据库并在线推广牙科诊所服务。'
           }
           type="success"
           showIcon
@@ -28,32 +28,19 @@ const Welcome: React.FC = () => {
           }}
         />
         <Typography.Text strong>
-          Advanced Form{' '}
-          <a
-            href="https://procomponents.ant.design/components/table"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            Welcome
-          </a>
+          现代牙科诊所排班软件,我们的应用程序正在改变人们向牙科医生预订服务的方式。现在只需几秒钟。此外，该系统可帮助您获得更多预订并保留更大比例的客户。
         </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-table</CodePreview>
+        <CodePreview>Do Design</CodePreview>
         <Typography.Text
           strong
           style={{
             marginBottom: 12,
           }}
         >
-          Advanced layout{' '}
-          <a
-            href="https://procomponents.ant.design/components/layout"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            Welcome
-          </a>
+          轻松预约牙医服务，实证研究表明，超过 96%
+          的牙科护理患者使用在线预订系统安排预约，而不是打电话到诊所。该统计数据表明，人们更喜欢使用日程安排应用程序，因为它的预订过程简单且速度快。
         </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
+        <CodePreview>Do Design</CodePreview>
       </Card>
     </PageContainer>
   );

@@ -40,6 +40,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
+      if (location.pathname === '/user/logon') {
+        return;
+      }
       if (
         !initialState?.currentUser?.userId &&
         location.pathname !== loginPath

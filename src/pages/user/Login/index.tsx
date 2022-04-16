@@ -2,8 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message } from 'antd';
 import React, { useState } from 'react';
 import { ProFormText, LoginForm, ProFormRadio } from '@ant-design/pro-form';
-import { history, useModel } from 'umi';
-import Footer from '@/components/Footer';
+import { history, Link, useModel } from 'umi';
 import { login } from '@/services/ant-design-pro/api';
 import './index.less';
 // import { getFakeCaptcha } from '@/services/ant-design-pro/login';
@@ -134,10 +133,12 @@ const Login: React.FC = () => {
                 },
               ]}
             />
+            <Link to="/user/logon" style={{ float: 'right' }}>
+              立即注册
+            </Link>
           </>
         </LoginForm>
       </div>
-      <Footer />
     </div>
   );
 };

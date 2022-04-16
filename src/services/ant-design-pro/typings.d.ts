@@ -9,7 +9,7 @@ declare namespace API {
     phone?: string;
     address?: string;
     birthday?: string;
-    type?: 1;
+    type?: number;
   };
 
   type LoginResult = {

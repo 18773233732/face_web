@@ -1,67 +1,83 @@
 ﻿export default [
   {
-    path: '/user',
-    layout: false,
-    routes: [
-      {
-        path: '/user',
-        routes: [
-          {
-            name: 'login',
-            path: '/user/login',
-            component: './user/Login',
-          },
-          {
-            name: 'logon',
-            path: '/user/logon',
-            component: './user/Logon',
-          },
-        ],
-      },
-      {
-        component: './404',
-      },
-    ],
-  },
-  {
     path: '/welcome',
-    name: 'welcome',
+    name: '首页',
     icon: 'smile',
     component: './Welcome',
   },
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
+    path: '/user/logon',
+    name: '用户注册',
+    layout: false,
+    icon: 'smile',
+    // access: 'admin',
+    component: './user/Logon',
+  },
+  {
+    path: '/user',
+    layout: false,
+    icon: 'smile',
     routes: [
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
+        path: '/user/login',
+        component: './user/Login',
       },
       {
         component: './404',
       },
     ],
   },
+  // {
+  //   path: '/admin',
+  //   name: 'admin',
+  //   icon: 'smile',
+  //   access: 'yyyy',
+  //   component: './Admin',
+  //   routes: [
+  //     {
+  //       path: '/admin/sub-page',
+  //       name: 'sub-page',
+  //       icon: 'smile',
+  //       component: './Welcome',
+  //     },
+  //     {
+  //       component: './404',
+  //     },
+  //   ],
+  // },
   {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
+    path: '/account/center',
+    component: './user/UserInfo',
+  },
+  {
+    name: '用户列表',
+    icon: 'smile',
+    path: '/userlist',
+    component: './UserList',
+    // access: 'admin',
+  },
+  {
+    name: '用户预约',
+    icon: 'smile',
+    path: '/order/doctorlist',
+    // access: 'doctor',
+    component: './DoctorOrder',
   },
   {
     name: '新建测试',
-    icon: 'table',
+    icon: 'smile',
     path: '/addtest',
     component: './AddTest',
   },
   {
+    name: '预约列表',
+    icon: 'smile',
+    path: '/order/userlist',
+    component: './UserOrder',
+  },
+  {
     name: '新建测试2',
-    icon: 'table',
+    icon: 'smile',
     path: '/addtest2',
     component: './AddTest2',
   },
