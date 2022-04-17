@@ -122,7 +122,6 @@ export default () => {
         return (
           <Button
             size="small"
-            type="link"
             onClick={() => handleDelete(value.orderId)}
             danger
           >
