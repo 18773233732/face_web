@@ -1,10 +1,11 @@
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getUserTreatMentList } from '@/services/ant-design-pro/api';
-import { useRef, useState } from 'react';
-import { Button, Drawer } from 'antd';
-import { useModel } from 'umi';
+import { getAdminOrderList } from '@/services/ant-design-pro/api';
+import { useRef } from 'react';
+import { Button, message } from 'antd';
+import { userDelete } from '@/services/ant-design-pro/api';
+import moment from 'moment';
 
 enum OrderTimeType {
   '8:00 ~ 9:00',
@@ -16,11 +17,15 @@ enum OrderTimeType {
 }
 
 export default () => {
-  const { initialState } = useModel('@@initialState');
-  const [drawerShow, setDrawShow] = useState<any>(null);
   const ref = useRef<any>(null);
-  const handleShowDrawer = (values: string | null) => {
-    setDrawShow(values);
+  const handleDelete = async (userId: number) => {
+    const msg = await userDelete({ userId });
+    if (msg.msg === 'SUCCESS') {
+      message.success('删除用户成功！');
+      ref.current.reload();
+    } else {
+      message.error('删除用户失败！');
+    }
   };
   const columns: ProColumns<any>[] = [
     {
@@ -29,9 +34,14 @@ export default () => {
       dataIndex: 'orderId',
     },
     {
-      title: '医生姓名',
-      key: 'doctorName',
-      dataIndex: 'doctorName',
+      title: '预约用户',
+      key: 'orderUser',
+      dataIndex: 'orderUser',
+    },
+    {
+      title: '预约姓名',
+      key: 'userName',
+      dataIndex: 'userName',
       // valueEnum: userType
     },
     {
@@ -54,16 +64,41 @@ export default () => {
         return (
           <Button
             size="small"
-            ghost
-            type="primary"
-            onClick={() => handleShowDrawer(value?.detail || null)}
+            disabled={
+              value?.orderDate < moment().format('YYYY-MM-DD') ? true : false
+            }
+            onClick={() => handleDelete(value.orderId)}
+            danger
           >
-            查看
+            删除
           </Button>
         );
       },
     },
   ];
+  const getUserSelectList = async (data: {
+    pageNum: number;
+    pageSize: number;
+    orderDoctor?: number;
+  }): Promise<any> => {
+    const msg = await getAdminOrderList(data);
+    if (msg.status === 200) {
+      if (msg?.data?.list?.length) {
+        const userList = msg?.data?.list.map((value: any, index: number) => {
+          value.key = `key-${index}`;
+          return value;
+        });
+        return userList;
+      } else {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  };
+  // useEffect(() => {
+  //   getUserSelectList({ pageNum: 1, pageSize: 1000 });
+  // }, []);
   return (
     <PageContainer>
       <ProTable
@@ -81,19 +116,12 @@ export default () => {
         ) => {
           // 这里需要返回一个 Promise,在返回之前你可以进行数据转化
           // 如果需要转化参数可以在这里进行修改
-          const msg = await getUserTreatMentList({
+          const msg = await getUserSelectList({
             pageNum: params.current,
             pageSize: params.pageSize,
-            orderUser: initialState?.currentUser?.userId,
           });
           return {
-            data:
-              msg?.data?.list?.map((item: any, index: number) => {
-                return {
-                  ...item,
-                  key: `${index}`,
-                };
-              }) || [],
+            data: msg,
             // success 请返回 true，
             success: msg.length,
             // 不然 table 会停止解析数据，即使有数据
@@ -103,13 +131,6 @@ export default () => {
           };
         }}
       />
-      <Drawer
-        title="诊疗结果"
-        onClose={() => setDrawShow(null)}
-        visible={drawerShow}
-      >
-        {drawerShow}
-      </Drawer>
     </PageContainer>
   );
 };

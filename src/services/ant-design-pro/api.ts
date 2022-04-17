@@ -116,6 +116,17 @@ export async function treamentDelete(
 }
 
 /** 删除用户 POST /api/user/logon */
+export async function orderDelete(body: any, options?: { [key: string]: any }) {
+  return request<any>('/api/order/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 删除用户 POST /api/user/logon */
 export async function askDelete(body: any, options?: { [key: string]: any }) {
   return request<any>('/api/ask/delete', {
     method: 'POST',
@@ -198,6 +209,21 @@ export async function getDoctorOrderList(
   });
 }
 
+/** 医生查询自己预约列表 POST /api/order/selectUserList */
+export async function getAdminOrderList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/order/selectAll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 医生查询诊疗 POST /api/order/selectUserList */
 export async function getDoctorTreatMentList(
   body: any,
@@ -218,6 +244,21 @@ export async function getUserTreatMentList(
   options?: { [key: string]: any },
 ) {
   return request<any>('/api/treatment/selectUserTreatment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 用户查询诊疗 POST /api/order/selectUserList */
+export async function getAdminTreatMentList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/treatment/selectAll', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -277,6 +318,20 @@ export async function getUserAskList(
   options?: { [key: string]: any },
 ) {
   return request<any>('/api/ask/selectDoctorAsk', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 自己查询自己的咨询 POST /api/order/selectDoctorOrder */
+export async function getAdminAskList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/ask/selectAll', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

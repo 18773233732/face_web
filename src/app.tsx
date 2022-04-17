@@ -47,8 +47,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
         !initialState?.currentUser?.userId &&
         location.pathname !== loginPath
       ) {
-        console.log(initialState?.currentUser?.userId, location.pathname);
-        // console.log('跳转');
         history.push(loginPath);
       }
     },

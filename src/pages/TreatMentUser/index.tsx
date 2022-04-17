@@ -52,7 +52,7 @@ export default () => {
         msg.data.list.map((item: any) => {
           return {
             value: item?.orderId,
-            label: `诊疗-${item?.orderId}`,
+            label: `诊疗-${item?.orderId}-${item.userName}`,
           };
         }),
       );
@@ -95,6 +95,9 @@ export default () => {
         return (
           <Button
             size="small"
+            disabled={
+              value?.orderDate < moment().format('YYYY-MM-DD') ? true : false
+            }
             onClick={() => handleDelete(value.treatmentId)}
             danger
           >
@@ -104,31 +107,6 @@ export default () => {
       },
     },
   ];
-  // const getUserSelectList = async (data: {
-  //   pageNum: number;
-  //   pageSize: number;
-  //   orderDoctor?: number;
-  // }): Promise<any> => {
-  //   const msg = await getDoctorOrderList(data);
-  //   // console.log(msg);
-  //   if (msg.status === 200) {
-  //     if (msg?.data?.list?.length) {
-  //       const userList = msg?.data?.list.map((value: any, index: number) => {
-  //         value.key = `key-${index}`;
-  //         return value;
-  //       });
-  //       // console.log(userList)
-  //       return userList;
-  //     } else {
-  //       return [];
-  //     }
-  //   } else {
-  //     return [];
-  //   }
-  // };
-  // useEffect(() => {
-  //   getUserSelectList({ pageNum: 1, pageSize: 1000 });
-  // }, []);
   return (
     <PageContainer>
       <ProTable
@@ -162,7 +140,6 @@ export default () => {
             pageSize: params.pageSize,
             orderDoctor: initialState?.currentUser?.userId,
           });
-          // console.log(msg, 1111)
           return {
             data:
               msg?.data?.list?.map((item: any, index: number) => {

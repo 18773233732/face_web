@@ -26,7 +26,6 @@ export default () => {
     setShowView(item);
   };
   const handleUpdate = (item: any) => {
-    console.log(item);
     setShowUpdate(item);
   };
   const handleDelete = async (articleId: number) => {
@@ -118,14 +117,12 @@ export default () => {
     pageSize: number;
   }): Promise<any> => {
     const msg = await getArticleList(data);
-    // console.log(msg);
     if (msg.status === 200) {
       if (msg?.data?.list?.length) {
         const userList = msg?.data?.list.map((value: any, index: number) => {
           value.key = `key-${index}`;
           return value;
         });
-        // console.log(userList)
         return userList;
       } else {
         return [];
@@ -170,7 +167,6 @@ export default () => {
             pageNum: params.current,
             pageSize: params.pageSize,
           });
-          // console.log(msg, 1111)
           return {
             data: msg,
             // success 请返回 true，
@@ -193,7 +189,6 @@ export default () => {
         <Form
           ref={form}
           onFinish={async (values: any) => {
-            // console.log();
             const msg = await InsertArticle({
               ...showUpdate,
               ...values,
@@ -255,7 +250,6 @@ export default () => {
         <Form
           ref={formAdd}
           onFinish={async (values: any) => {
-            // console.log();
             const msg = await UpdateArticle({
               ...values,
               createUser: initialState?.currentUser?.userId,

@@ -18,7 +18,6 @@ const userType = ['管理员', '用户', '医生'];
 const loginOut = async () => {
   const userData = JSON.parse(localStorage.getItem('userData') || '');
   const data = await outLogin({ userId: userData?.userId });
-  // console.log(data, 1111)
   if (data.status == 200) {
     message.success('退出成功');
   }
@@ -37,7 +36,6 @@ const loginOut = async () => {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
-  // console.log(initialState)
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
       const { key } = event;

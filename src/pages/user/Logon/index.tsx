@@ -43,12 +43,10 @@ const Login: React.FC = () => {
           ...s,
           currentUser: msg.data,
         }));
-        // console.log(initialState?.currentUser)
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         // const { query } = history.location;
         // const { redirect } = query as { redirect: string };
-        // console.log(msg.data.token);
         history.push('/');
         return;
       } else {

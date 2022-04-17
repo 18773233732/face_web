@@ -9,7 +9,7 @@ import {
 } from '@/services/ant-design-pro/api';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Form, message, Modal, Select, DatePicker } from 'antd';
-import { userDelete } from '@/services/ant-design-pro/api';
+import { orderDelete } from '@/services/ant-design-pro/api';
 import { useModel } from 'umi';
 import moment from 'moment';
 import { PlusOutlined } from '@ant-design/icons';
@@ -22,20 +22,20 @@ enum OrderTimeType {
   '15:00 ~ 16:00',
   '16:00 ~ 17:00',
 }
-// const OrderTimeArray = [
-//   { label: '8:00 ~ 9:00', value: 0 },
-//   { label: '9:00 ~ 10:00', value: 1 },
-//   { label: '10:00 ~ 11:00', value: 2 },
-//   { label: '14:00 ~ 15:00', value: 3 },
-//   { label: '15:00 ~ 16:00', value: 4 },
-//   { label: '16:00 ~ 17:00', value: 5 },
-// ];
+const OrderTimeArray = [
+  { label: '8:00 ~ 9:00', value: 0 },
+  { label: '9:00 ~ 10:00', value: 1 },
+  { label: '10:00 ~ 11:00', value: 2 },
+  { label: '14:00 ~ 15:00', value: 3 },
+  { label: '15:00 ~ 16:00', value: 4 },
+  { label: '16:00 ~ 17:00', value: 5 },
+];
 
 export default () => {
   const ref = useRef<any>(null);
   const formRef = useRef<any>(null);
   const [canOrder, setCanOrder] = useState<boolean>(false);
-  const [orderTime] = useState<any>([]);
+  const [orderTime, setOrderTime] = useState<any>([]);
   const [orderParams, setOrderParams] = useState<any>(null);
   const [docList, setDocList] = useState<any>([]);
   const [showAdd, setShowAdd] = useState<boolean>(false);
@@ -57,7 +57,20 @@ export default () => {
   };
   const getOrderTimeLimt = async (params: any) => {
     const msg = await getOrderLimi(params);
-    console.log(msg);
+    if (msg.status === 200) {
+      const canOrderArray = [4, 4, 4, 4, 4, 4];
+      msg.data.forEach((item: any) => {
+        canOrderArray[item.orderTime] = canOrderArray[item.orderTime] - 1;
+      });
+      setCanOrder(true);
+      const da = canOrderArray.map((value: number, index: number) => {
+        if (value > 0) {
+          return OrderTimeArray[index];
+        }
+        return undefined;
+      });
+      setOrderTime(da);
+    }
   };
   useEffect(() => {
     getDoctorLists();
@@ -67,14 +80,14 @@ export default () => {
     if (orderParams && orderParams?.orderDoctor && orderParams?.orderDate) {
       getOrderTimeLimt({
         orderDoctor: orderParams.orderDoctor,
-        orderDate: orderParams.orderDate,
+        orderDate: moment(orderParams.orderDate).format('YYYY-MM-DD'),
       });
-      setCanOrder(true);
+      // if
     }
   }, [orderParams]);
 
-  const handleDelete = async (userId: number) => {
-    const msg = await userDelete({ userId });
+  const handleDelete = async (orderId: number) => {
+    const msg = await orderDelete({ orderId });
     if (msg.msg === 'SUCCESS') {
       message.success('取消预约成功！');
       ref.current.reload();
@@ -122,6 +135,9 @@ export default () => {
         return (
           <Button
             size="small"
+            disabled={
+              value?.orderDate < moment().format('YYYY-MM-DD') ? true : false
+            }
             onClick={() => handleDelete(value.orderId)}
             danger
           >
@@ -144,7 +160,6 @@ export default () => {
           value.key = `key-${index}`;
           return value;
         });
-        // console.log(userList)
         return userList;
       } else {
         return [];
@@ -193,7 +208,6 @@ export default () => {
             pageSize: params.pageSize,
             orderUser: initialState?.currentUser?.userId,
           });
-          // console.log(msg, 1111)
           return {
             data: msg,
             // success 请返回 true，
@@ -216,7 +230,7 @@ export default () => {
         }}
         onCancel={() => {
           addDoctorOrder();
-          formRef.current.resetFields([]);
+          formRef.current.resetFields();
           setCanOrder(false);
         }}
       >

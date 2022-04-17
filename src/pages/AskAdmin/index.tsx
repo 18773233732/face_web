@@ -2,7 +2,7 @@ import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import {
-  getUserAskList,
+  getAdminAskList,
   getDoctorList,
   InsertDoctorAsk,
 } from '@/services/ant-design-pro/api';
@@ -137,9 +137,8 @@ export default () => {
   const getUserSelectList = async (data: {
     pageNum: number;
     pageSize: number;
-    askUserId?: number;
   }): Promise<any> => {
-    const msg = await getUserAskList(data);
+    const msg = await getAdminAskList(data);
     if (msg.status === 200) {
       if (msg?.data?.list?.length) {
         const userList = msg?.data?.list.map((value: any, index: number) => {
@@ -184,7 +183,6 @@ export default () => {
           const msg = await getUserSelectList({
             pageNum: params.current,
             pageSize: params.pageSize,
-            askUserId: initialState?.currentUser?.userId,
           });
           return {
             data: msg,

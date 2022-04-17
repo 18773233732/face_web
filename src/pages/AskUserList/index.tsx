@@ -125,7 +125,6 @@ export default () => {
             pageSize: params.pageSize,
             answerUserId: initialState?.currentUser?.userId,
           });
-          // console.log(msg, 1111)
           return {
             data: msg,
             // success 请返回 true，

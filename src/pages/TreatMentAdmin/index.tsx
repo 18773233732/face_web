@@ -1,22 +1,13 @@
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getUserTreatMentList } from '@/services/ant-design-pro/api';
+import { getAdminTreatMentList } from '@/services/ant-design-pro/api';
 import { useRef, useState } from 'react';
 import { Button, Drawer } from 'antd';
-import { useModel } from 'umi';
-
-enum OrderTimeType {
-  '8:00 ~ 9:00',
-  '9:00 ~ 10:00',
-  '10:00 ~ 11:00',
-  '14:00 ~ 15:00',
-  '15:00 ~ 16:00',
-  '16:00 ~ 17:00',
-}
+// import { useModel } from 'umi';
 
 export default () => {
-  const { initialState } = useModel('@@initialState');
+  // const { initialState } = useModel('@@initialState');
   const [drawerShow, setDrawShow] = useState<any>(null);
   const ref = useRef<any>(null);
   const handleShowDrawer = (values: string | null) => {
@@ -29,22 +20,15 @@ export default () => {
       dataIndex: 'orderId',
     },
     {
-      title: '医生姓名',
-      key: 'doctorName',
-      dataIndex: 'doctorName',
-      // valueEnum: userType
-    },
-    {
-      title: '预约时间',
-      key: 'orderDate',
-      valueType: 'date',
-      dataIndex: 'orderDate',
+      title: '诊疗结果',
+      key: 'detail',
+      dataIndex: 'detail',
     },
     {
       title: '预约时段',
-      key: 'orderTime',
-      dataIndex: 'orderTime',
-      valueEnum: OrderTimeType,
+      key: 'createTime',
+      valueType: 'date',
+      dataIndex: 'createTime',
     },
     {
       title: '操作',
@@ -81,10 +65,10 @@ export default () => {
         ) => {
           // 这里需要返回一个 Promise,在返回之前你可以进行数据转化
           // 如果需要转化参数可以在这里进行修改
-          const msg = await getUserTreatMentList({
+          const msg = await getAdminTreatMentList({
             pageNum: params.current,
             pageSize: params.pageSize,
-            orderUser: initialState?.currentUser?.userId,
+            // orderUser: initialState?.currentUser?.userId,
           });
           return {
             data:

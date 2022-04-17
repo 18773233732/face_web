@@ -31,6 +31,7 @@ export default () => {
     {
       title: '用户名称',
       key: 'userName',
+      disable: true,
       hideInSearch: true,
 
       dataIndex: 'userName',
@@ -88,15 +89,13 @@ export default () => {
     pageSize: number;
   }): Promise<any> => {
     const msg = await selectUserList(data);
-    // console.log(msg);
     if (msg.status === 200) {
       if (msg?.data?.list?.length) {
         const userList = msg?.data?.list.map((value: any, index: number) => {
           value.key = `key-${index}`;
           return value;
         });
-        // console.log(userList)
-        return userList.filter((item: any) => item.type === 2);
+        return userList.filter((item: any) => item.type === 1);
       } else {
         return [];
       }

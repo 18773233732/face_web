@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { Button, message } from 'antd';
 import { userDelete } from '@/services/ant-design-pro/api';
 import { useModel } from 'umi';
+import moment from 'moment';
 
 enum OrderTimeType {
   '8:00 ~ 9:00',
@@ -66,6 +67,9 @@ export default () => {
         return (
           <Button
             size="small"
+            disabled={
+              value?.orderDate < moment().format('YYYY-MM-DD') ? true : false
+            }
             onClick={() => handleDelete(value.orderId)}
             danger
           >
@@ -81,14 +85,12 @@ export default () => {
     orderDoctor?: number;
   }): Promise<any> => {
     const msg = await getDoctorOrderList(data);
-    // console.log(msg);
     if (msg.status === 200) {
       if (msg?.data?.list?.length) {
         const userList = msg?.data?.list.map((value: any, index: number) => {
           value.key = `key-${index}`;
           return value;
         });
-        // console.log(userList)
         return userList;
       } else {
         return [];
@@ -122,7 +124,6 @@ export default () => {
             pageSize: params.pageSize,
             orderDoctor: initialState?.currentUser?.userId,
           });
-          // console.log(msg, 1111)
           return {
             data: msg,
             // success 请返回 true，

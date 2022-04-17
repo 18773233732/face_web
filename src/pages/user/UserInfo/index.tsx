@@ -8,7 +8,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProCard from '@ant-design/pro-card';
 import styles from './index.less';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useModel, history } from 'umi';
+import { history, useModel } from 'umi';
 import { message } from 'antd';
 import { userUpdate } from '@/services/ant-design-pro/api';
 const AvatarView = ({ avatar }: { avatar: string }) => (
@@ -20,16 +20,29 @@ const AvatarView = ({ avatar }: { avatar: string }) => (
   </>
 );
 export default () => {
-  const { initialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   // const { currentUser } = initialState;
   const currentUser = initialState?.currentUser;
   const handleFinish = async (params: any) => {
-    // console.log(params, 111)
     const data = await userUpdate(params);
-    // console.log(data)
+    await setInitialState({
+      currentUser: {
+        ...currentUser,
+        ...params,
+      },
+    });
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({
+        ...currentUser,
+        ...params,
+      }),
+    );
     if (data.status === 200) {
       message.success('更新基本信息成功');
       history.push('/');
+    } else {
+      message.error(data.msg);
     }
   };
   return (
@@ -50,12 +63,13 @@ export default () => {
               },
             }}
             initialValues={{
-              ...currentUser,
+              ...initialState?.currentUser,
             }}
             hideRequiredMark
           >
             <ProFormText
               width="md"
+              disabled
               name="userId"
               fieldProps={{
                 size: 'large',
@@ -163,6 +177,7 @@ export default () => {
               name="type"
               // initialValue={1}
               label="用户类型"
+              disabled
               options={[
                 {
                   label: '管理员',

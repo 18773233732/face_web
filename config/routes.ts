@@ -96,6 +96,27 @@
     component: './UserOrder',
   },
   {
+    name: '所有诊疗',
+    icon: 'Form',
+    path: '/treament/admin',
+    access: 'admin',
+    component: './TreatMentAdmin',
+  },
+  {
+    name: '所有预约',
+    icon: 'ClockCircle',
+    path: '/order/admin',
+    access: 'admin',
+    component: './OrderAdmin',
+  },
+  {
+    name: '所有咨询',
+    icon: 'QuestionCircle',
+    path: '/ask/admin',
+    access: 'admin',
+    component: './AskAdmin',
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },
