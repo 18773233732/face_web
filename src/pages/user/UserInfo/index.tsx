@@ -25,11 +25,14 @@ export default () => {
   const currentUser = initialState?.currentUser;
   const handleFinish = async (params: any) => {
     const data = await userUpdate(params);
-    await setInitialState({
-      currentUser: {
-        ...currentUser,
-        ...params,
-      },
+    await setInitialState((s: any) => {
+      return {
+        ...s,
+        currentUser: {
+          ...currentUser,
+          ...params,
+        },
+      };
     });
     localStorage.setItem(
       'userData',

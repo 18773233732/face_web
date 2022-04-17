@@ -247,6 +247,7 @@ export default () => {
           onFinish={async (values: any) => {
             const msg = await InsertDoctorOrder({
               ...values,
+              orderDate: moment(values.orderDate).format('YYYY-MM-DD'),
               orderUser: initialState?.currentUser?.userId,
               createTime: moment().format('YYYY-MM-DD'),
             });
@@ -257,6 +258,7 @@ export default () => {
             }
             formRef.current.resetFields();
             setShowAdd(false);
+            setCanOrder(false);
             ref.current.reload();
           }}
         >

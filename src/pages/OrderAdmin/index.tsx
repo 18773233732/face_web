@@ -39,12 +39,6 @@ export default () => {
       dataIndex: 'orderUser',
     },
     {
-      title: '预约姓名',
-      key: 'userName',
-      dataIndex: 'userName',
-      // valueEnum: userType
-    },
-    {
       title: '预约时间',
       key: 'orderDate',
       valueType: 'date',
