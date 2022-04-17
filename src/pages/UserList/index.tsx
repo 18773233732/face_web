@@ -150,7 +150,7 @@ export default () => {
         width={350}
         centered
         title="添加用户"
-        onOk={() => ref.current?.submit?.()}
+        onOk={() => formRef.current?.submit?.()}
         onCancel={addUser}
         visible={showModal}
       >

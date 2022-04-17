@@ -29,14 +29,9 @@ export default () => {
       dataIndex: 'orderId',
     },
     {
-      title: '预约用户',
-      key: 'orderUser',
-      dataIndex: 'orderUser',
-    },
-    {
-      title: '预约姓名',
-      key: 'userName',
-      dataIndex: 'userName',
+      title: '医生姓名',
+      key: 'doctorName',
+      dataIndex: 'doctorName',
       // valueEnum: userType
     },
     {

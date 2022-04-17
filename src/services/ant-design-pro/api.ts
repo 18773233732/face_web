@@ -63,7 +63,7 @@ export async function login(
 
 /** 注册接口 POST /api/user/logon */
 export async function logon(
-  body: API.LoginParams & { userName: any },
+  body: API.LoginParams,
   options?: { [key: string]: any },
 ) {
   return request<any>('/api/user/logon', {

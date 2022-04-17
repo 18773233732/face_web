@@ -74,14 +74,14 @@ export default () => {
       dataIndex: 'askId',
     },
     {
-      title: '咨询医生',
-      key: 'askUserId',
-      dataIndex: 'askUserId',
+      title: '咨询医生ID',
+      key: 'answerUserId',
+      dataIndex: 'answerUserId',
     },
     {
       title: '医生名字',
-      key: 'doctorName',
-      dataIndex: 'doctorName',
+      key: 'userName',
+      dataIndex: 'userName',
       // valueEnum: userType
     },
     {

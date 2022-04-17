@@ -215,7 +215,7 @@ export default () => {
             />
           </Form.Item>
           <Form.Item name="detail" label="诊疗结果">
-            <TextArea placeholder="请输入诊疗结果" />
+            <TextArea rows={5} placeholder="请输入诊疗结果" />
           </Form.Item>
         </Form>
       </Modal>

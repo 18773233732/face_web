@@ -61,7 +61,7 @@ declare namespace API {
   type LoginParams = {
     userId: number;
     password: string;
-    type: number;
+    type?: number;
   };
 
   type ErrorResponse = {
