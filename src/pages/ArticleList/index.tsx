@@ -247,7 +247,10 @@ export default () => {
         onOk={() => {
           formAdd.current.submit();
         }}
-        onCancel={() => setShowUpdate(null)}
+        onCancel={() => {
+          setShowUpdate(null);
+          formAdd.current.resetFields();
+        }}
       >
         <Form
           ref={formAdd}

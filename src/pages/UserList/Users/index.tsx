@@ -47,7 +47,6 @@ export default () => {
       key: 'type',
       dataIndex: 'type',
       hideInSearch: true,
-
       valueEnum: userType,
     },
     {
@@ -97,7 +96,7 @@ export default () => {
           return value;
         });
         // console.log(userList)
-        return userList;
+        return userList.filter((item: any) => item.type === 2);
       } else {
         return [];
       }
@@ -134,7 +133,6 @@ export default () => {
             pageNum: params.current,
             pageSize: params.pageSize,
           });
-          // console.log(msg, 1111)
           return {
             data: msg,
             // success 请返回 true，

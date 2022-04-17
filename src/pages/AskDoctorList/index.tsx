@@ -205,7 +205,10 @@ export default () => {
         onOk={() => {
           formRef.current.submit();
         }}
-        onCancel={addDoctorOrder}
+        onCancel={() => {
+          addDoctorOrder();
+          formRef.current.resetFields();
+        }}
       >
         <Form
           ref={formRef}

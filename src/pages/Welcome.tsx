@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Row, Col, Typography } from 'antd';
-import styles from './Welcome.less';
+// import styles from './Welcome.less';
 import { getArticleList } from '@/services/ant-design-pro/api';
-
-const CodePreview: React.FC = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
-);
 
 const Welcome: React.FC = () => {
   const [articles, setArticles] = useState<any>([]);
@@ -47,9 +39,7 @@ const Welcome: React.FC = () => {
       </div>
       <Card>
         <Alert
-          message={
-            '诊所使用的牙医排班和牙科服务预订系统。软件改善了预约体验，自动发送短信和电子邮件提醒，帮助管理患者数据库并在线推广牙科诊所服务。'
-          }
+          message={'我刷牙、用牙线，但还是有好多龋洞，怎么预防?'}
           type="success"
           showIcon
           banner
@@ -59,19 +49,25 @@ const Welcome: React.FC = () => {
           }}
         />
         <Typography.Text strong>
-          现代牙科诊所排班软件,我们的应用程序正在改变人们向牙科医生预订服务的方式。现在只需几秒钟。此外，该系统可帮助您获得更多预订并保留更大比例的客户。
+          答：
+          如果你按时刷牙，用漱口水和牙线还是会容易长龋齿，那你应该请牙医检查一下自己的清洁技术和饮食习惯。可能是你唾液中的酸性物质成分过高。你要知道，食物和饮料(例如运动饮料和可乐)含有很多酸性物质和糖类，它们会造成龋齿。刷牙的方式方法也很重要，推荐改良的巴氏刷牙法，它可能是最能有效清洁牙菌斑的刷牙方法了。
         </Typography.Text>
-        <CodePreview>Do Design</CodePreview>
-        <Typography.Text
-          strong
+      </Card>
+      <div style={{ height: 10 }} />
+      <Card>
+        <Alert
+          message={'哪种牙线比较好?我偏爱某种牙线有影响吗?'}
+          type="success"
+          showIcon
+          banner
           style={{
-            marginBottom: 12,
+            margin: -12,
+            marginBottom: 24,
           }}
-        >
-          轻松预约牙医服务，实证研究表明，超过 96%
-          的牙科护理患者使用在线预订系统安排预约，而不是打电话到诊所。该统计数据表明，人们更喜欢使用日程安排应用程序，因为它的预订过程简单且速度快。
+        />
+        <Typography.Text strong>
+          答：牙线一般分为有蜡和无蜡两种。据调查：大概有79%的消费者喜欢有蜡的牙线，而只有21%的消费者喜欢无蜡牙线。无蜡的牙线很光滑，一般比有蜡的牙线细，主要用于非常紧密的牙齿接触点;有蜡的作用是使牙线的纤维结合在一起，能够很容易地通过牙齿接触点。有些牙医认为无蜡牙线可能会去除更多菌斑，其实，无论哪种牙线，只要使用方便，功效显著就是好的。
         </Typography.Text>
-        <CodePreview>Do Design</CodePreview>
       </Card>
     </PageContainer>
   );

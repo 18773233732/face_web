@@ -16,6 +16,18 @@ export async function currentUser(options?: { [key: string]: any }) {
   });
 }
 
+/** 获取当前的用户 GET /api/currentUser */
+export async function getOrderLimi(options?: { [key: string]: any }) {
+  return request<any>('/api/order/selectOrderTime', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: options,
+    ...(options || {}),
+  });
+}
+
 export async function getTestData(options?: { [key: string]: any }) {
   return request<{
     data: any;

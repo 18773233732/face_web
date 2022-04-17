@@ -95,7 +95,6 @@ export default () => {
         return (
           <Button
             size="small"
-            type="link"
             onClick={() => handleDelete(value.treatmentId)}
             danger
           >
@@ -187,7 +186,10 @@ export default () => {
         onOk={() => {
           formRef.current.submit();
         }}
-        onCancel={addUserOrder}
+        onCancel={() => {
+          addUserOrder();
+          formRef.current.resetFields();
+        }}
       >
         <Form
           ref={formRef}

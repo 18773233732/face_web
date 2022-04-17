@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
 
   return (
     <DefaultFooter
-      copyright={`${currentYear} ${'Mr.Yao Design'}`}
+      copyright={`${currentYear} ${'牙科诊所预约系统'}`}
       links={[
         {
           key: 'github',

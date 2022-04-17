@@ -5,6 +5,7 @@ import {
   getUserOrderList,
   getDoctorList,
   InsertDoctorOrder,
+  getOrderLimi,
 } from '@/services/ant-design-pro/api';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Form, message, Modal, Select, DatePicker } from 'antd';
@@ -21,18 +22,21 @@ enum OrderTimeType {
   '15:00 ~ 16:00',
   '16:00 ~ 17:00',
 }
-const OrderTime = [
-  { label: '8:00 ~ 9:00', value: 0 },
-  { label: '9:00 ~ 10:00', value: 1 },
-  { label: '10:00 ~ 11:00', value: 2 },
-  { label: '14:00 ~ 15:00', value: 3 },
-  { label: '15:00 ~ 16:00', value: 4 },
-  { label: '16:00 ~ 17:00', value: 5 },
-];
+// const OrderTimeArray = [
+//   { label: '8:00 ~ 9:00', value: 0 },
+//   { label: '9:00 ~ 10:00', value: 1 },
+//   { label: '10:00 ~ 11:00', value: 2 },
+//   { label: '14:00 ~ 15:00', value: 3 },
+//   { label: '15:00 ~ 16:00', value: 4 },
+//   { label: '16:00 ~ 17:00', value: 5 },
+// ];
 
 export default () => {
   const ref = useRef<any>(null);
   const formRef = useRef<any>(null);
+  const [canOrder, setCanOrder] = useState<boolean>(false);
+  const [orderTime] = useState<any>([]);
+  const [orderParams, setOrderParams] = useState<any>(null);
   const [docList, setDocList] = useState<any>([]);
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const { initialState } = useModel('@@initialState');
@@ -51,16 +55,31 @@ export default () => {
       setDocList([]);
     }
   };
+  const getOrderTimeLimt = async (params: any) => {
+    const msg = await getOrderLimi(params);
+    console.log(msg);
+  };
   useEffect(() => {
     getDoctorLists();
   }, []);
+
+  useEffect(() => {
+    if (orderParams && orderParams?.orderDoctor && orderParams?.orderDate) {
+      getOrderTimeLimt({
+        orderDoctor: orderParams.orderDoctor,
+        orderDate: orderParams.orderDate,
+      });
+      setCanOrder(true);
+    }
+  }, [orderParams]);
+
   const handleDelete = async (userId: number) => {
     const msg = await userDelete({ userId });
     if (msg.msg === 'SUCCESS') {
-      message.success('删除预约成功！');
+      message.success('取消预约成功！');
       ref.current.reload();
     } else {
-      message.error('删除预约失败！');
+      message.error('取消预约失败！');
     }
   };
   const addDoctorOrder = () => {
@@ -107,7 +126,7 @@ export default () => {
             onClick={() => handleDelete(value.orderId)}
             danger
           >
-            删除
+            取消
           </Button>
         );
       },
@@ -193,10 +212,25 @@ export default () => {
         onOk={() => {
           formRef.current.submit();
         }}
-        onCancel={addDoctorOrder}
+        okButtonProps={{
+          disabled: !canOrder,
+        }}
+        onCancel={() => {
+          addDoctorOrder();
+          formRef.current.resetFields([]);
+          setCanOrder(false);
+        }}
       >
         <Form
           ref={formRef}
+          onValuesChange={(values) => {
+            setOrderParams((s: any) => {
+              return {
+                ...s,
+                ...values,
+              };
+            });
+          }}
           onFinish={async (values: any) => {
             const msg = await InsertDoctorOrder({
               ...values,
@@ -221,12 +255,17 @@ export default () => {
             />
           </Form.Item>
           <Form.Item name="orderDate" label="选择预约时间">
-            <DatePicker format="YYYY-MM-DD" disabledDate={disabledDate} />
+            <DatePicker
+              format="YYYY-MM-DD"
+              mode="date"
+              disabledDate={disabledDate}
+            />
           </Form.Item>
           <Form.Item name="orderTime" label="选择预约时段">
             <Select
+              disabled={!canOrder}
               placeholder="选择预约时段"
-              options={OrderTime}
+              options={orderTime}
               style={{ width: 120 }}
             />
           </Form.Item>
