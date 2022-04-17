@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Alert, message } from 'antd';
+import { Alert, message, Space } from 'antd';
 import React, { useState } from 'react';
 import { ProFormText, LoginForm } from '@ant-design/pro-form';
 import { history, Link, useModel } from 'umi';
@@ -8,6 +8,7 @@ import './index.less';
 // import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 
 import styles from './index.less';
+import Footer from '@/components/Footer';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -101,12 +102,15 @@ const Login: React.FC = () => {
                 },
               ]}
             />
-            <Link to="/user/logon" style={{ float: 'right' }}>
-              立即注册
-            </Link>
+            <Space style={{ marginBottom: 20 }}>
+              <Link to="/user/logon" style={{ float: 'right' }}>
+                立即注册
+              </Link>
+            </Space>
           </>
         </LoginForm>
       </div>
+      <Footer />
     </div>
   );
 };

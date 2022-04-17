@@ -58,17 +58,21 @@ export default () => {
   const getOrderTimeLimt = async (params: any) => {
     const msg = await getOrderLimi(params);
     if (msg.status === 200) {
+      // 每个时间段只有4个人可以约
       const canOrderArray = [4, 4, 4, 4, 4, 4];
       msg.data.forEach((item: any) => {
-        canOrderArray[item.orderTime] = canOrderArray[item.orderTime] - 1;
+        canOrderArray[item.orderTime] =
+          canOrderArray[item.orderTime] - item.orderNum;
       });
       setCanOrder(true);
-      const da = canOrderArray.map((value: number, index: number) => {
-        if (value > 0) {
-          return OrderTimeArray[index];
-        }
-        return undefined;
-      });
+      const da = canOrderArray
+        .map((value: number, index: number) => {
+          if (value > 0) {
+            return OrderTimeArray[index];
+          }
+          return undefined;
+        })
+        .filter((item) => item);
       setOrderTime(da);
     }
   };
@@ -235,6 +239,7 @@ export default () => {
         }}
       >
         <Form
+          labelCol={{ span: 6 }}
           ref={formRef}
           onValuesChange={(values) => {
             setOrderParams((s: any) => {
@@ -266,7 +271,7 @@ export default () => {
             <Select
               placeholder={'选择医生'}
               options={docList}
-              style={{ width: 120 }}
+              style={{ width: 150 }}
             />
           </Form.Item>
           <Form.Item name="orderDate" label="选择预约时间">
@@ -274,6 +279,7 @@ export default () => {
               format="YYYY-MM-DD"
               mode="date"
               disabledDate={disabledDate}
+              style={{ width: 150 }}
             />
           </Form.Item>
           <Form.Item name="orderTime" label="选择预约时段">
@@ -281,7 +287,7 @@ export default () => {
               disabled={!canOrder}
               placeholder="选择预约时段"
               options={orderTime}
-              style={{ width: 120 }}
+              style={{ width: 150 }}
             />
           </Form.Item>
         </Form>

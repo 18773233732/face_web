@@ -39,6 +39,17 @@ export default () => {
       dataIndex: 'orderUser',
     },
     {
+      title: '预约医生',
+      key: 'orderDoctor,',
+      dataIndex: 'orderDoctor',
+    },
+    {
+      title: '创建时间',
+      key: 'createTime',
+      valueType: 'date',
+      dataIndex: 'createTime',
+    },
+    {
       title: '预约时间',
       key: 'orderDate',
       valueType: 'date',

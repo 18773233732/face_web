@@ -166,12 +166,15 @@ export default () => {
           }}
         >
           <Form.Item name="userId">
-            <Input placeholder="用户ID" />
+            <Input placeholder="用户ID" required />
+          </Form.Item>
+          <Form.Item name="userName">
+            <Input placeholder="用户名" required />
           </Form.Item>
           <Form.Item name="password">
-            <Input type="password" placeholder="密码" />
+            <Input type="password" placeholder="密码" required />
           </Form.Item>
-          <Form.Item name="type" initialValue={1}>
+          <Form.Item name="type" initialValue={2}>
             <Radio.Group>
               <Radio value={0}>管理员</Radio>
               <Radio value={1}>用户</Radio>

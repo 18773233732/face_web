@@ -121,6 +121,12 @@
     redirect: '/welcome',
   },
   {
+    path: '/about',
+    name: '关于',
+    icon: 'RadiusSetting',
+    component: './About',
+  },
+  {
     component: './404',
   },
 ];

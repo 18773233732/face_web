@@ -1,13 +1,14 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Alert, message } from 'antd';
+import { Alert, message, Space } from 'antd';
 import React, { useState } from 'react';
 import { ProFormText, LoginForm } from '@ant-design/pro-form';
-import { history, useModel } from 'umi';
+import { history, Link, useModel } from 'umi';
 import { logon } from '@/services/ant-design-pro/api';
 import './index.less';
 // import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 
 import styles from './index.less';
+import Footer from '@/components/Footer';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -87,6 +88,20 @@ const Login: React.FC = () => {
                 },
               ]}
             />
+            <ProFormText
+              name="userName"
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined className={styles.prefixIcon} />,
+              }}
+              placeholder={'用户名'}
+              rules={[
+                {
+                  required: true,
+                  message: '请输入用户名!',
+                },
+              ]}
+            />
             <ProFormText.Password
               name="password"
               fieldProps={{
@@ -102,8 +117,14 @@ const Login: React.FC = () => {
               ]}
             />
           </>
+          <Space style={{ marginBottom: 20 }}>
+            <Link to="/user/login" style={{ float: 'right' }}>
+              已有密码，立即登录
+            </Link>
+          </Space>
         </LoginForm>
       </div>
+      <Footer />
     </div>
   );
 };

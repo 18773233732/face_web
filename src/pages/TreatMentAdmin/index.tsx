@@ -25,6 +25,12 @@ export default () => {
       dataIndex: 'detail',
     },
     {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      valueType: 'date',
+    },
+    {
       title: '预约时段',
       key: 'createTime',
       valueType: 'date',

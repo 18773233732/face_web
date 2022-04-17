@@ -165,10 +165,13 @@ export default () => {
             setShowModal(false);
           }}
         >
-          <Form.Item name="userId">
+          <Form.Item name="userId" required>
             <Input placeholder="用户ID" />
           </Form.Item>
-          <Form.Item name="password">
+          <Form.Item name="userName" required>
+            <Input placeholder="用户名" />
+          </Form.Item>
+          <Form.Item name="password" required>
             <Input type="password" placeholder="密码" />
           </Form.Item>
           <Form.Item name="type" initialValue={1}>
