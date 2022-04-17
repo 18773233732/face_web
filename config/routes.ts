@@ -7,9 +7,7 @@
   },
   {
     path: '/user/logon',
-    name: '用户注册',
-    icon: 'smile',
-    access: 'admin',
+    layout: false,
     component: './user/Logon',
   },
   {

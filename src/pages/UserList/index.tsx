@@ -3,7 +3,7 @@ import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import { selectUserList } from '@/services/ant-design-pro/api';
 import { useRef, useState } from 'react';
-import { Button, Input, message, Modal, Radio, Space } from 'antd';
+import { Button, Form, Input, message, Modal, Radio } from 'antd';
 import { userDelete } from '@/services/ant-design-pro/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { logon } from '@/services/ant-design-pro/api';
@@ -16,7 +16,7 @@ enum userType {
 
 export default () => {
   const ref = useRef<any>(null);
-  const [addUserData, setAddUserData] = useState<any>({});
+  const formRef = useRef<any>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleDelete = async (userId: number) => {
     const msg = await userDelete({ userId });
@@ -150,53 +150,38 @@ export default () => {
         width={350}
         centered
         title="添加用户"
-        onOk={async () => {
-          const data = await logon(addUserData);
-          if (data.status === 200) {
-            message.success('注册成功！');
-            ref.current.reload();
-          } else {
-            message.error('注册失败!');
-          }
-          setShowModal(false);
-        }}
+        onOk={() => ref.current?.submit?.()}
         onCancel={addUser}
         visible={showModal}
       >
-        <Space direction="vertical">
-          <Input
-            name="userId"
-            placeholder="用户ID"
-            onChange={(event: any) =>
-              setAddUserData((s: any) => {
-                return { ...s, userId: event.target.value };
-              })
+        <Form
+          ref={formRef}
+          onFinish={async (values: any) => {
+            const data = await logon(values);
+            if (data.status === 200) {
+              message.success('注册成功！');
+              ref.current.reload();
+            } else {
+              message.error('注册失败!');
             }
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="密码"
-            onChange={(event: any) => {
-              setAddUserData((s: any) => {
-                return { ...s, password: event.target.value };
-              });
-            }}
-          />
-          <Radio.Group
-            name="type"
-            onChange={(event: any) =>
-              setAddUserData((s: any) => {
-                return { ...s, type: event.target.value };
-              })
-            }
-          >
-            <Radio value={0}>管理员</Radio>
-            <Radio value={1}>用户</Radio>
-            <Radio value={2}>医生</Radio>
-          </Radio.Group>
-          {/* 添加用户 */}
-        </Space>
+            formRef.current.resetFields();
+            setShowModal(false);
+          }}
+        >
+          <Form.Item name="userId">
+            <Input placeholder="用户ID" />
+          </Form.Item>
+          <Form.Item name="password">
+            <Input type="password" placeholder="密码" />
+          </Form.Item>
+          <Form.Item name="type" initialValue={1}>
+            <Radio.Group>
+              <Radio value={0}>管理员</Radio>
+              <Radio value={1}>用户</Radio>
+              <Radio value={2}>医生</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Form>
       </Modal>
     </PageContainer>
   );
