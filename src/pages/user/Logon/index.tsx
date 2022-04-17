@@ -1,12 +1,8 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message } from 'antd';
 import React, { useState } from 'react';
-import {
-  ProFormText,
-  LoginForm,
-  ProFormRadio,
-  ProFormDatePicker,
-} from '@ant-design/pro-form';
+import ProForm, { ProFormText, ProFormRadio } from '@ant-design/pro-form';
+import ProCard from '@ant-design/pro-card';
 import { logon } from '@/services/ant-design-pro/api';
 import './index.less';
 
@@ -48,140 +44,78 @@ const Login: React.FC = () => {
   };
   const { msg } = userLogonState;
   return (
-    <LoginForm
-      title="牙科诊所预约系统注册"
-      subTitle={'牙科诊所预约系统'}
-      submitter={{
-        // 配置按钮文本
-        searchConfig: {
-          submitText: '注册',
-        },
-      }}
-      onFinish={async (values) => {
-        await handleSubmit(values as API.LoginParams);
-      }}
-    >
-      {msg !== 'SUCCESS' && <LoginMessage content={msg} />}
-      <>
-        <ProFormText
-          name="userId"
-          fieldProps={{
-            size: 'large',
-            prefix: <UserOutlined className={styles.prefixIcon} />,
+    <ProCard title="用户注册" split="vertical" bordered headerBordered>
+      <ProCard colSpan="50%">
+        <ProForm
+          layout="vertical"
+          onFinish={async (values) => {
+            await handleSubmit(values as API.LoginParams);
           }}
-          placeholder={'用户Id'}
-          rules={[
-            {
-              required: true,
-              message: '请输入用户Id!',
+          submitter={{
+            resetButtonProps: {
+              style: {
+                display: 'none',
+              },
             },
-          ]}
-        />
-        <ProFormText
-          name="userName"
-          fieldProps={{
-            size: 'large',
-            prefix: <UserOutlined className={styles.prefixIcon} />,
+            submitButtonProps: {
+              children: '更新基本信息',
+            },
           }}
-          placeholder={'用户名字'}
-          rules={[
-            {
-              required: true,
-              message: '请输入用户名字!',
-            },
-          ]}
-        />
-        <ProFormRadio.Group
-          name="gender"
-          initialValue={0}
-          label="性别"
-          options={[
-            {
-              label: '男',
-              value: 0,
-            },
-            {
-              label: '女',
-              value: 1,
-            },
-          ]}
-        />
-        <ProFormText
-          name="address"
-          fieldProps={{
-            size: 'large',
-            prefix: <UserOutlined className={styles.prefixIcon} />,
-          }}
-          placeholder={'地址'}
-          rules={[
-            {
-              required: true,
-              message: '请输入地址!',
-            },
-          ]}
-        />
-        <ProFormText
-          name="phone"
-          fieldProps={{
-            size: 'large',
-            prefix: <UserOutlined className={styles.prefixIcon} />,
-          }}
-          placeholder={'手机'}
-          rules={[
-            {
-              required: true,
-              message: '请输入手机!',
-            },
-          ]}
-        />
-        <ProFormDatePicker
-          name="birthday"
-          fieldProps={{
-            size: 'large',
-          }}
-          placeholder={'生日'}
-          rules={[
-            {
-              required: true,
-              message: '请输入生日!',
-            },
-          ]}
-        />
-        <ProFormText.Password
-          name="password"
-          fieldProps={{
-            size: 'large',
-            prefix: <LockOutlined className={styles.prefixIcon} />,
-          }}
-          placeholder={'密码'}
-          rules={[
-            {
-              required: true,
-              message: '请输入密码！',
-            },
-          ]}
-        />
-        <ProFormRadio.Group
-          name="type"
-          initialValue={1}
-          label="用户类型"
-          options={[
-            {
-              label: '管理员',
-              value: 0,
-            },
-            {
-              label: '用户',
-              value: 1,
-            },
-            {
-              label: '医生',
-              value: 2,
-            },
-          ]}
-        />
-      </>
-    </LoginForm>
+          hideRequiredMark
+        >
+          {msg !== 'SUCCESS' && <LoginMessage content={msg} />}
+          <ProCard>
+            <ProFormText
+              name="userId"
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined className={styles.prefixIcon} />,
+              }}
+              placeholder={'用户Id'}
+              rules={[
+                {
+                  required: true,
+                  message: '请输入用户Id!',
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="password"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined className={styles.prefixIcon} />,
+              }}
+              placeholder={'密码'}
+              rules={[
+                {
+                  required: true,
+                  message: '请输入密码！',
+                },
+              ]}
+            />
+            <ProFormRadio.Group
+              name="type"
+              initialValue={1}
+              label="用户类型"
+              options={[
+                {
+                  label: '管理员',
+                  value: 0,
+                },
+                {
+                  label: '用户',
+                  value: 1,
+                },
+                {
+                  label: '医生',
+                  value: 2,
+                },
+              ]}
+            />
+          </ProCard>
+        </ProForm>
+      </ProCard>
+    </ProCard>
   );
 };
 

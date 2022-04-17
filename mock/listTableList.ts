@@ -282,9 +282,35 @@ const orderSelectDoctorOrder = {
   },
 };
 
+const articleSelectList = {
+  status: 200,
+  msg: 'SUCCESS',
+  data: {
+    total: 0,
+    list: [],
+    pageNum: 1,
+    pageSize: 10,
+    size: 0,
+    startRow: 0,
+    endRow: 0,
+    pages: 0,
+    prePage: 0,
+    nextPage: 0,
+    isFirstPage: true,
+    isLastPage: true,
+    hasPreviousPage: false,
+    hasNextPage: false,
+    navigatePages: 8,
+    navigatepageNums: [],
+    navigateFirstPage: 0,
+    navigateLastPage: 0,
+  },
+};
+
 export default {
-  'GET /api/rule': getRule,
-  'POST /api/rule': postRule,
-  'POST /api/order/selectUserList': orderSelectUserList,
-  'POST /api/order/selectDoctorOrder': orderSelectDoctorOrder,
+  // 'GET /api/rule': getRule,
+  // 'POST /api/rule': postRule,
+  // 'POST /api/order/selectUserList': orderSelectUserList,
+  // 'POST /api/order/selectDoctorOrder': orderSelectDoctorOrder,
+  // 'POST /api/article/selectList': articleSelectList,
 };

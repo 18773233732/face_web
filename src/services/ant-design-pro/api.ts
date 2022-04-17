@@ -88,6 +88,77 @@ export async function userDelete(body: any, options?: { [key: string]: any }) {
   });
 }
 
+/** 删除用户 POST /api/user/logon */
+export async function treamentDelete(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/treatment/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除用户 POST /api/user/logon */
+export async function askDelete(body: any, options?: { [key: string]: any }) {
+  return request<any>('/api/ask/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除文章 POST /api/article/delete */
+export async function DeleteArticle(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/article/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除文章 POST /api/article/delete */
+export async function InsertArticle(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/article/insert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 删除文章 POST /api/article/update */
+export async function UpdateArticle(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/article/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 更新用户 POST /api/user/update */
 export async function userUpdate(body: any, options?: { [key: string]: any }) {
   return request<any>('/api/user/update', {
@@ -115,12 +186,155 @@ export async function getDoctorOrderList(
   });
 }
 
+/** 医生查询诊疗 POST /api/order/selectUserList */
+export async function getDoctorTreatMentList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/treatment/selectDoctorTreatment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 用户查询诊疗 POST /api/order/selectUserList */
+export async function getUserTreatMentList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/treatment/selectUserTreatment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 所有医生 POST /api/order/selectUserList */
+export async function getDoctorList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/user/selectDoctorList', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 医生查询自己文章 POST /api/article/selectList */
+export async function getArticleList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/article/selectList', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 自己查询自己的预约 POST /api/order/selectDoctorOrder */
 export async function getUserOrderList(
   body: any,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/api/order/selectDoctorOrder', {
+  return request<any>('/api/order/selectDoctorList', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 自己查询自己的咨询 POST /api/order/selectDoctorOrder */
+export async function getUserAskList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/ask/selectDoctorAsk', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 医生查询自己的咨询 POST /api/order/selectDoctorOrder */
+export async function getDoctorAskList(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/ask/selectUserAsk', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 用户预约 POST /api/order/insert */
+export async function InsertDoctorOrder(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/order/insert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 用户咨询 POST /api/order/insert */
+export async function InsertDoctorAsk(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/ask/insert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 用户咨询 POST /api/order/insert */
+export async function InsertTreatment(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/treatment/insert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 用户咨询 POST /api/order/insert */
+export async function AnserDoctorAsk(
+  body: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/ask/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

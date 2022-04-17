@@ -11,6 +11,7 @@ export type GlobalHeaderRightProps = {
   menu?: boolean;
 };
 
+const userType = ['管理员', '用户', '医生'];
 /**
  * 退出登录，并且将当前的 url 保存
  */
@@ -101,6 +102,9 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
           {currentUser.userId}
         </Avatar>
         <span className={`${styles.name} anticon`}>{currentUser.userId}</span>
+        <span className={`${styles.name} anticon`}>
+          {userType[currentUser?.type || 0]}
+        </span>
       </span>
     </HeaderDropdown>
   );

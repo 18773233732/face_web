@@ -1,7 +1,7 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message } from 'antd';
 import React, { useState } from 'react';
-import { ProFormText, LoginForm, ProFormRadio } from '@ant-design/pro-form';
+import { ProFormText, LoginForm } from '@ant-design/pro-form';
 import { history, Link, useModel } from 'umi';
 import { login } from '@/services/ant-design-pro/api';
 import './index.less';
@@ -28,20 +28,6 @@ const Login: React.FC = () => {
   );
   const { setInitialState } = useModel('@@initialState');
 
-  // const fetchUserInfo = async () => {
-  //   // const userInfo = await initialState?.fetchUserInfo?.();
-  //   const userInfo = await currentUser({
-  //     "userId":
-  //   })
-  //   console.log(userInfo, 1111);
-  //   if (userInfo) {
-  //     await setInitialState((s) => ({
-  //       ...s,
-  //       currentUser: userInfo,
-  //     }));
-  //   }
-  // };
-
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
@@ -65,6 +51,8 @@ const Login: React.FC = () => {
         // console.log(msg.data.token);
         history.push('/');
         return;
+      } else {
+        message.error(msg.msg);
       }
       // 如果失败去设置用户错误信息
       // setUserLoginState(msg);
@@ -112,24 +100,6 @@ const Login: React.FC = () => {
                 {
                   required: true,
                   message: '请输入密码！',
-                },
-              ]}
-            />
-            <ProFormRadio.Group
-              name="type"
-              initialValue={1}
-              options={[
-                {
-                  label: '管理员',
-                  value: 0,
-                },
-                {
-                  label: '用户',
-                  value: 1,
-                },
-                {
-                  label: '医生',
-                  value: 2,
                 },
               ]}
             />

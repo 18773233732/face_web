@@ -2,37 +2,35 @@ import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import {
-  getUserOrderList,
+  getUserAskList,
   getDoctorList,
-  InsertDoctorOrder,
+  InsertDoctorAsk,
 } from '@/services/ant-design-pro/api';
 import { useEffect, useRef, useState } from 'react';
-import { Button, Form, message, Modal, Select, DatePicker } from 'antd';
-import { userDelete } from '@/services/ant-design-pro/api';
+import {
+  Button,
+  Form,
+  message,
+  Modal,
+  Select,
+  Input,
+  Space,
+  Tag,
+  Drawer,
+} from 'antd';
+import { askDelete } from '@/services/ant-design-pro/api';
 import { useModel } from 'umi';
 import moment from 'moment';
 import { PlusOutlined } from '@ant-design/icons';
-
-enum OrderTimeType {
-  '8:00 ~ 9:00',
-  '9:00 ~ 10:00',
-  '10:00 ~ 11:00',
-  '14:00 ~ 15:00',
-  '15:00 ~ 16:00',
-  '16:00 ~ 17:00',
-}
-const OrderTime = [
-  { label: '8:00 ~ 9:00', value: 0 },
-  { label: '9:00 ~ 10:00', value: 1 },
-  { label: '10:00 ~ 11:00', value: 2 },
-  { label: '14:00 ~ 15:00', value: 3 },
-  { label: '15:00 ~ 16:00', value: 4 },
-  { label: '16:00 ~ 17:00', value: 5 },
-];
+const { TextArea } = Input;
 
 export default () => {
   const ref = useRef<any>(null);
+  const [drawerVisible, setDrawerVisible] = useState<any>(null);
   const formRef = useRef<any>(null);
+  const onDrawerClose = () => {
+    setDrawerVisible(null);
+  };
   const [docList, setDocList] = useState<any>([]);
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const { initialState } = useModel('@@initialState');
@@ -54,8 +52,8 @@ export default () => {
   useEffect(() => {
     getDoctorLists();
   }, []);
-  const handleDelete = async (userId: number) => {
-    const msg = await userDelete({ userId });
+  const handleDelete = async (askId: number) => {
+    const msg = await askDelete({ askId });
     if (msg.msg === 'SUCCESS') {
       message.success('删除预约成功！');
       ref.current.reload();
@@ -66,16 +64,19 @@ export default () => {
   const addDoctorOrder = () => {
     setShowAdd(!showAdd);
   };
+  const handleShowDrawer = (values: string | null) => {
+    setDrawerVisible(values);
+  };
   const columns: ProColumns<any>[] = [
     {
-      title: '预约编号',
-      key: 'orderId',
-      dataIndex: 'orderId',
+      title: '咨询编号',
+      key: 'askId',
+      dataIndex: 'askId',
     },
     {
-      title: '预约医生ID',
-      key: 'orderDoctor',
-      dataIndex: 'orderDoctor',
+      title: '咨询医生',
+      key: 'askUserId',
+      dataIndex: 'askUserId',
     },
     {
       title: '医生名字',
@@ -84,16 +85,25 @@ export default () => {
       // valueEnum: userType
     },
     {
-      title: '预约时段',
-      key: 'orderTime',
-      dataIndex: 'orderTime',
-      valueEnum: OrderTimeType,
+      title: '咨询内容',
+      key: 'askContent',
+      dataIndex: 'askContent',
     },
     {
-      title: '预约时间',
-      key: 'orderDate',
-      valueType: 'date',
-      dataIndex: 'orderDate',
+      title: '是否回复',
+      key: 'answer',
+      dataIndex: 'answerContent',
+      render: (_, values: any) => {
+        if (values?.answerContent) {
+          return <Tag color="green">已回复</Tag>;
+        }
+        return <Tag color="red">未回复</Tag>;
+      },
+    },
+    {
+      title: '咨询时间',
+      key: 'askTime',
+      dataIndex: 'askTime',
     },
     {
       title: '操作',
@@ -101,14 +111,24 @@ export default () => {
       hideInSearch: true,
       render: (_, value: any) => {
         return (
-          <Button
-            size="small"
-            type="link"
-            onClick={() => handleDelete(value.orderId)}
-            danger
-          >
-            删除
-          </Button>
+          <Space direction="horizontal">
+            <Button
+              size="small"
+              onClick={() => handleDelete(value.askId)}
+              danger
+            >
+              删除
+            </Button>
+            <Button
+              size="small"
+              type="primary"
+              ghost
+              disabled={!value?.answerContent}
+              onClick={() => handleShowDrawer(value.answerContent)}
+            >
+              查看回复
+            </Button>
+          </Space>
         );
       },
     },
@@ -117,9 +137,9 @@ export default () => {
   const getUserSelectList = async (data: {
     pageNum: number;
     pageSize: number;
-    orderUser?: number;
+    askUserId?: number;
   }): Promise<any> => {
-    const msg = await getUserOrderList(data);
+    const msg = await getUserAskList(data);
     if (msg.status === 200) {
       if (msg?.data?.list?.length) {
         const userList = msg?.data?.list.map((value: any, index: number) => {
@@ -135,22 +155,14 @@ export default () => {
       return [];
     }
   };
-  const disabledDate = (current: any) => {
-    // Can not select days before today and today
-    return current && current < moment().endOf('day');
-  };
-
-  // useEffect(() => {
-  //   getUserSelectList({ pageNum: 1, pageSize: 1000 });
-  // }, []);
   return (
     <PageContainer>
       <ProTable
         toolBarRender={() => [
           <Button
             key="primary"
-            size="small"
             type="primary"
+            size="small"
             onClick={addDoctorOrder}
           >
             <PlusOutlined />
@@ -173,7 +185,7 @@ export default () => {
           const msg = await getUserSelectList({
             pageNum: params.current,
             pageSize: params.pageSize,
-            orderUser: initialState?.currentUser?.userId,
+            askUserId: initialState?.currentUser?.userId,
           });
           // console.log(msg, 1111)
           return {
@@ -198,40 +210,42 @@ export default () => {
         <Form
           ref={formRef}
           onFinish={async (values: any) => {
-            const msg = await InsertDoctorOrder({
+            const msg = await InsertDoctorAsk({
               ...values,
-              orderUser: initialState?.currentUser?.userId,
-              createTime: moment().format('YYYY-MM-DD'),
+              askUserId: initialState?.currentUser?.userId,
+              askTime: moment().format('YYYY-MM-DD'),
             });
             if (msg.status === 200) {
-              message.success('预约成功！');
+              message.success('添加咨询成功！');
             } else {
-              message.error(`预约失败，${msg?.msg}`);
+              message.error(`添加咨询失败，${msg?.msg}`);
             }
             formRef.current.resetFields();
             setShowAdd(false);
             ref.current.reload();
           }}
         >
-          <Form.Item name="orderDoctor" label="选择医生">
+          <Form.Item name="answerUserId" label="选择医生">
             <Select
               placeholder={'选择医生'}
               options={docList}
               style={{ width: 120 }}
             />
           </Form.Item>
-          <Form.Item name="orderDate" label="选择预约时间">
-            <DatePicker format="YYYY-MM-DD" disabledDate={disabledDate} />
-          </Form.Item>
-          <Form.Item name="orderTime" label="选择预约时段">
-            <Select
-              placeholder="选择预约时段"
-              options={OrderTime}
-              style={{ width: 120 }}
-            />
+          <Form.Item name="askContent" label="咨询内容">
+            {/* <DatePicker format="YYYY-MM-DD" disabledDate={disabledDate} /> */}
+            <TextArea placeholder="请输入咨询内容" />
           </Form.Item>
         </Form>
       </Modal>
+      <Drawer
+        title="回复详情"
+        placement="right"
+        onClose={onDrawerClose}
+        visible={drawerVisible}
+      >
+        {drawerVisible}
+      </Drawer>
     </PageContainer>
   );
 };

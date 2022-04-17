@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Alert, Typography } from 'antd';
+import { Card, Alert, Row, Col, Typography } from 'antd';
 import styles from './Welcome.less';
+import { getArticleList } from '@/services/ant-design-pro/api';
 
 const CodePreview: React.FC = ({ children }) => (
   <pre className={styles.pre}>
@@ -12,8 +13,38 @@ const CodePreview: React.FC = ({ children }) => (
 );
 
 const Welcome: React.FC = () => {
+  const [articles, setArticles] = useState<any>([]);
+  const getArticleLists = async (params: any) => {
+    const msg = await getArticleList(params);
+    if (msg.status === 200) {
+      setArticles(msg?.data?.list);
+    }
+  };
+  useEffect(() => {
+    getArticleLists({ pageSize: 10, pageNum: 1 });
+  }, []);
   return (
     <PageContainer>
+      <Typography.Title level={2}>🔥热门文章</Typography.Title>
+      <div style={{ marginBottom: 20 }} hidden={!articles?.length}>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Card title={articles[0]?.title} bordered={false}>
+              {articles[0]?.content}
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card title={articles[1]?.title} bordered={false}>
+              {articles[1]?.content}
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card title={articles[2]?.title} bordered={false}>
+              {articles[2]?.content}
+            </Card>
+          </Col>
+        </Row>
+      </div>
       <Card>
         <Alert
           message={

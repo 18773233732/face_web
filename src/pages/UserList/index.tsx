@@ -2,10 +2,11 @@ import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import { selectUserList } from '@/services/ant-design-pro/api';
-import { useRef } from 'react';
-import { Button, message } from 'antd';
-import { isEmpty } from 'lodash';
+import { useRef, useState } from 'react';
+import { Button, Input, message, Modal, Radio, Space } from 'antd';
 import { userDelete } from '@/services/ant-design-pro/api';
+import { PlusOutlined } from '@ant-design/icons';
+import { logon } from '@/services/ant-design-pro/api';
 
 enum userType {
   '管理员',
@@ -15,6 +16,8 @@ enum userType {
 
 export default () => {
   const ref = useRef<any>(null);
+  const [addUserData, setAddUserData] = useState<any>({});
+  const [showModal, setShowModal] = useState<boolean>(false);
   const handleDelete = async (userId: number) => {
     const msg = await userDelete({ userId });
     if (msg.msg === 'SUCCESS') {
@@ -28,10 +31,14 @@ export default () => {
     {
       title: '用户名称',
       key: 'userName',
+      hideInSearch: true,
+
       dataIndex: 'userName',
     },
     {
       title: '用户ID',
+      hideInSearch: true,
+
       key: 'userId',
       dataIndex: 'userId',
     },
@@ -39,16 +46,21 @@ export default () => {
       title: '用户类型',
       key: 'type',
       dataIndex: 'type',
+      hideInSearch: true,
+
       valueEnum: userType,
     },
     {
       title: '生日',
       key: 'birthday',
+      hideInSearch: true,
+
       dataIndex: 'birthday',
     },
     {
       title: '地址',
       key: 'address',
+      hideInSearch: true,
       dataIndex: 'address',
     },
     {
@@ -69,6 +81,9 @@ export default () => {
       },
     },
   ];
+  const addUser = () => {
+    setShowModal(!showModal);
+  };
   const getUserSelectList = async (data: {
     pageNum: number;
     pageSize: number;
@@ -96,8 +111,15 @@ export default () => {
   return (
     <PageContainer>
       <ProTable
+        search={false}
         actionRef={ref}
         columns={columns}
+        toolBarRender={() => [
+          <Button key="primary" type="primary" onClick={addUser}>
+            <PlusOutlined />
+            添加用户
+          </Button>,
+        ]}
         request={async (
           // 第一个参数 params 查询表单和 params 参数的结合
           // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
@@ -116,7 +138,7 @@ export default () => {
           return {
             data: msg,
             // success 请返回 true，
-            success: !isEmpty(msg),
+            success: msg.length,
             // 不然 table 会停止解析数据，即使有数据
             // success: boolean,
             // 不传会使用 data 的长度，如果是分页一定要传
@@ -124,6 +146,58 @@ export default () => {
           };
         }}
       />
+      <Modal
+        width={350}
+        centered
+        title="添加用户"
+        onOk={async () => {
+          const data = await logon(addUserData);
+          if (data.status === 200) {
+            message.success('注册成功！');
+            ref.current.reload();
+          } else {
+            message.error('注册失败!');
+          }
+          setShowModal(false);
+        }}
+        onCancel={addUser}
+        visible={showModal}
+      >
+        <Space direction="vertical">
+          <Input
+            name="userId"
+            placeholder="用户ID"
+            onChange={(event: any) =>
+              setAddUserData((s: any) => {
+                return { ...s, userId: event.target.value };
+              })
+            }
+          />
+          <Input
+            name="password"
+            type="password"
+            placeholder="密码"
+            onChange={(event: any) => {
+              setAddUserData((s: any) => {
+                return { ...s, password: event.target.value };
+              });
+            }}
+          />
+          <Radio.Group
+            name="type"
+            onChange={(event: any) =>
+              setAddUserData((s: any) => {
+                return { ...s, type: event.target.value };
+              })
+            }
+          >
+            <Radio value={0}>管理员</Radio>
+            <Radio value={1}>用户</Radio>
+            <Radio value={2}>医生</Radio>
+          </Radio.Group>
+          {/* 添加用户 */}
+        </Space>
+      </Modal>
     </PageContainer>
   );
 };
