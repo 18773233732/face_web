@@ -3,9 +3,9 @@
 
 declare namespace API {
   type CurrentUser = {
-    userId?: number;
+    userId: number;
     password?: string;
-    userName?: string;
+    userName: string;
     phone?: string;
     address?: string;
     birthday?: string;
