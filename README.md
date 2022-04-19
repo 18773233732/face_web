@@ -57,3 +57,5 @@ git 克隆本项目 `git clone https://github.com/18773233732/face_web.git`
 ### 查看项目
 
 `npm start` 或者 `yarn start` 之后浏览器访问本机地址 `http://localhost:8000` 如果 8000 端口被占用会递增寻找空闲端口，terminal 终端会有提示
+
+本项目已经部署服务器 访问 `http://124.221.107.247:8000` 线上项目
