@@ -5,6 +5,7 @@ import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import defaultSettings from '../config/defaultSettings';
+import { isEmpty } from 'lodash';
 
 const loginPath = '/user/login';
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -16,12 +17,17 @@ export const initialStateConfig = {
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 export async function getInitialState(): Promise<{
-  settings?: Partial<LayoutSettings>;
+  settings: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser | undefined;
   loading?: boolean;
 }> {
   // 如果是登录页面，不执行
-  const userData = JSON.parse(localStorage.getItem('userData') || '');
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  if (isEmpty(userData)) {
+    return {
+      settings: defaultSettings,
+    };
+  }
   return {
     settings: defaultSettings,
     currentUser: userData,
