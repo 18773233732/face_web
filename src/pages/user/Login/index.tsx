@@ -13,7 +13,6 @@ import {
   ProFormCheckbox,
   ProFormText,
   LoginForm,
-  ProFormRadio,
 } from '@ant-design/pro-form';
 import { history, useModel } from 'umi';
 import Footer from '@/components/Footer';
@@ -143,24 +142,6 @@ const Login: React.FC = () => {
                   {
                     required: true,
                     message: '请输入密码！',
-                  },
-                ]}
-              />
-              <ProFormRadio.Group
-                name="radio"
-                label="Radio.Group"
-                options={[
-                  {
-                    label: 'item 1',
-                    value: 'a',
-                  },
-                  {
-                    label: 'item 2',
-                    value: 'b',
-                  },
-                  {
-                    label: 'item 3',
-                    value: 'c',
                   },
                 ]}
               />
