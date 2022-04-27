@@ -1,17 +1,11 @@
 import React, { useCallback } from 'react';
-import {
-  LogoutOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
-import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
-import { outLogin } from '@/services/ant-design-pro/api';
+import { outLogin } from '@/services';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-
 export type GlobalHeaderRightProps = {
   menu?: boolean;
 };
@@ -21,23 +15,19 @@ export type GlobalHeaderRightProps = {
  */
 const loginOut = async () => {
   await outLogin();
-  const { query = {}, search, pathname } = history.location;
+  const { query = {} } = history.location;
   const { redirect } = query;
   // Note: There may be security issues, please note
   window.localStorage.removeItem('token');
   if (window.location.pathname !== '/user/login' && !redirect) {
     history.replace({
       pathname: '/user/login',
-      search: stringify({
-        redirect: pathname + search,
-      }),
     });
   }
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
-
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
       const { key } = event;
@@ -75,12 +65,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-      {menu && (
-        <Menu.Item key="center">
-          <UserOutlined />
-          个人中心
-        </Menu.Item>
-      )}
       {menu && (
         <Menu.Item key="settings">
           <SettingOutlined />

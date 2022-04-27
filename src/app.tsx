@@ -5,10 +5,12 @@ import { history } from 'umi';
 import { isEmpty } from 'lodash';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { currentUser as queryCurrentUser } from './services';
 import defaultSettings from '../config/defaultSettings';
+import type { CurrentUser } from './entries';
 
 const loginPath = '/user/login';
+const registerPath = '/user/register';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -20,9 +22,9 @@ export const initialStateConfig = {
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentUser?: CurrentUser;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo: () => Promise<CurrentUser | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -38,7 +40,10 @@ export async function getInitialState(): Promise<{
     return undefined;
   };
   // 如果是登录页面，不执行
-  if (history.location.pathname !== loginPath) {
+  if (
+    history.location.pathname !== loginPath &&
+    history.location.pathname !== registerPath
+  ) {
     const currentUser = await fetchUserInfo();
     // console.log(currentUser);
     return {
@@ -65,9 +70,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser?.id && location.pathname !== loginPath) {
-        console.log(initialState);
-        console.log('layout 跳转登录页面');
+      if (
+        !initialState?.currentUser?.id &&
+        location.pathname !== loginPath &&
+        location.pathname !== registerPath
+      ) {
+        // console.log(initialState);
         history.push(loginPath);
       }
     },

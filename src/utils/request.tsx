@@ -1,5 +1,5 @@
 import { extend } from 'umi-request';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 // import { Intl } from '@components';
 // import { autoToastErrorCodes } from '@constant/errorCode';
 
@@ -31,7 +31,6 @@ const request = extend({
 request.interceptors.request.use((url, options) => {
   const { headers = {} } = options;
   const token = window.localStorage.getItem('token') || '';
-  // console.log(token);
   return {
     url,
     options: {
@@ -39,6 +38,7 @@ request.interceptors.request.use((url, options) => {
       headers: {
         ...headers,
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
     },
   };
@@ -58,6 +58,20 @@ request.interceptors.response.use(async (res: Response) => {
       if (process.env.NODE_ENV === 'development') {
         window.location.pathname = '/user/login';
       }
+    }
+    if (respond.code === 400) {
+      notification.error({
+        message: '客户端错误',
+        description: '接口参数错误，请检查页面表单或者信息！',
+        duration: 0,
+      });
+    }
+    if (respond.code === 500) {
+      notification.error({
+        message: '服务端错误',
+        description: '服务器接口错误，请联系管理员！',
+        duration: 0,
+      });
     }
     return respond;
   } catch (error) {

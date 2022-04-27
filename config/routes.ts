@@ -1,83 +1,60 @@
 ﻿export default [
   {
-    path: '/user',
+    name: 'login',
     layout: false,
-    routes: [
-      {
-        path: '/user',
-        routes: [
-          {
-            name: 'login',
-            path: '/user/login',
-            component: './user/Login',
-          },
-        ],
-      },
-      {
-        component: './404',
-      },
-    ],
+    hideInMenu: true,
+    path: '/user/login',
+    component: './user/Login',
   },
   {
-    path: '/dashboard',
-    name: '控制面板',
+    name: '添加账户',
     icon: 'crown',
-    routes: [
-      {
-        path: '/dashboard/system',
-        name: '系统面板',
-        icon: 'smile',
-        component: './Dashboard/SystemBoard',
-      },
-      {
-        path: '/dashboard/school',
-        name: '校园面板',
-        icon: 'smile',
-        component: './Dashboard/SchoolBoard',
-      },
-      {
-        component: './404',
-      },
-    ],
+    path: '/user/register',
+    component: './user/register',
+    access: 'admin',
   },
   {
-    path: '/admin',
-    name: 'admin',
+    path: '/account/settings',
+    hideInMenu: true,
+    component: './user/update',
+  },
+  {
+    path: '/users',
+    name: '所有用户',
     icon: 'crown',
-    component: './Admin',
-    routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Dashboard/SystemBoard',
-      },
-      {
-        component: './404',
-      },
-    ],
+    component: './UsersTable',
+    access: 'admin',
   },
   {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
+    path: '/devices',
+    name: '设备信息',
+    icon: 'crown',
+    component: './DeviceInfoTable',
+    access: 'admin',
   },
   {
-    name: '新建测试',
-    icon: 'table',
-    path: '/addtest',
-    component: './AddTest',
+    path: '/records',
+    icon: 'crown',
+    name: '用户打卡信息',
+    component: './TempRecordsTable',
+    access: 'admin',
   },
   {
-    name: '新建测试2',
-    icon: 'table',
-    path: '/addtest2',
-    component: './AddTest2',
+    path: '/dashboard/device',
+    name: '测温设备面板',
+    icon: 'smile',
+    component: './Dashboard/DeviceBoard',
+    access: 'admin',
+  },
+  {
+    path: '/dashboard/school',
+    name: '校园监控面板',
+    icon: 'smile',
+    component: './Dashboard/SchoolBoard',
   },
   {
     path: '/',
-    redirect: '/dashboard/system',
+    redirect: '/dashboard/school',
   },
   {
     component: './404',
