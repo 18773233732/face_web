@@ -8,6 +8,8 @@ import { getUserList, updateUserInfo } from './services';
 import { message } from 'antd';
 
 export default () => {
+  const tableRef = useRef<any>(null);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const columns: ProColumns<any>[] = [
     {
       title: '用户编号',
@@ -86,6 +88,8 @@ export default () => {
         <a
           key="editable"
           onClick={() => {
+            // console.log(record.id - 1);
+            // console.log(editableKeys);
             action?.startEditable?.(record.id - 1);
           }}
         >
@@ -94,8 +98,6 @@ export default () => {
       ],
     },
   ];
-  const tableRef = useRef<any>(null);
-  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   return (
     <PageContainer>
       <EditableProTable
@@ -119,10 +121,10 @@ export default () => {
             if (data.code === 200 && data.success === true) {
               message.success('更新用户信息成功！');
               tableRef?.current?.reload();
-              await setEditableRowKeys([]);
             } else {
               message.error('更新用户信息失败！');
             }
+            await setEditableRowKeys([]);
           },
           onCancel: async () => {
             await setEditableRowKeys([]);

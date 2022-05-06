@@ -6,6 +6,7 @@ import PieChart from './CircleChart';
 import { getErrorData, getUsersLength } from '../services';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import ClockChart from './ClockChart';
+import { Link } from 'umi';
 
 const SchoolBoard: React.FC = () => {
   const [errorData, setErrorData] = useState<any>({
@@ -50,13 +51,20 @@ const SchoolBoard: React.FC = () => {
             <Statistic title="账户数量" value={userLength} />
           </Col>
           <Col span={6}>
-            <Statistic
-              title="昨日温度异常人数"
-              value={errorData.yesterdayError}
-            />
+            <Link to={'/situation/yesterdayrecords'}>
+              <Statistic
+                title="昨日温度异常人数"
+                value={errorData.yesterdayError}
+              />
+            </Link>
           </Col>
           <Col span={6}>
-            <Statistic title="今日温度异常人数" value={errorData.todayError} />
+            <Link to={'/situation/todayrecords'}>
+              <Statistic
+                title="今日温度异常人数"
+                value={errorData.todayError}
+              />
+            </Link>
           </Col>
           <Col span={6}>
             <Statistic
