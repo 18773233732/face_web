@@ -12,40 +12,27 @@ export default () => {
       dataIndex: 'id',
     },
     {
-      title: '设备名',
+      title: '游戏名',
       key: 'name',
       dataIndex: 'name',
     },
     {
-      title: 'CPU温度',
-      key: 'cpu',
-      dataIndex: 'cpu',
-      render: (_, record: any) => {
-        return <>{`${record.cpu}°C`}</>;
-      },
-    },
-    {
-      title: '内存占用率',
-      readonly: true,
-      key: 'mem',
-      dataIndex: 'mem',
-      render: (_, record: any) => {
-        return <>{`${record.mem}%`}</>;
-      },
-    },
-    {
-      title: '磁盘占用率',
-      key: 'disk',
-      dataIndex: 'disk',
-      render: (_, record: any) => {
-        return <>{`${record.disk}%`}</>;
-      },
-    },
-    {
-      title: '更新时间',
-      key: 'date',
-      dataIndex: 'date',
-      valueType: 'dateTime',
+      title: '操作',
+      valueType: 'option',
+      width: 150,
+      fixed: 'right',
+      render: (text, record, index, action) => [
+        <a
+          key="editable"
+          onClick={() => {
+            // console.log(record.id - 1);
+            // console.log(editableKeys);
+            action?.startEditable?.(record.id - 1);
+          }}
+        >
+          编辑
+        </a>,
+      ],
     },
   ];
   return (

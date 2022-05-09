@@ -68,8 +68,7 @@ const Login: React.FC = () => {
       <div className={styles.content}>
         <LoginForm
           autoComplete="off"
-          title="校园疫情校测系统"
-          subTitle={'hnust 基于人脸识别的校园疫情监测系统'}
+          title="后台管理"
           onFinish={async (values) => {
             await handleSubmit(values as LoginParams);
           }}

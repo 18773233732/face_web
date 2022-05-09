@@ -12,14 +12,14 @@
     component: './user/update',
   },
   {
-    name: '系统运维',
+    name: '系统管理',
     path: '/devops',
     icon: 'Api',
     access: 'admin',
     routes: [
       {
         path: '/devops/device/info',
-        name: '温测设备信息',
+        name: '游戏管理',
         component: './DeviceInfoTable',
       },
       {
@@ -29,7 +29,7 @@
       },
       {
         path: '/devops/user/users',
-        name: '系统所有用户',
+        name: '用户管理',
         component: './UsersTable',
       },
       {
@@ -40,7 +40,7 @@
     ],
   },
   {
-    name: '疫情信息',
+    name: '其他',
     path: '/situation',
     icon: 'Dashboard',
     routes: [

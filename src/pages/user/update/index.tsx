@@ -3,21 +3,15 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProCard from '@ant-design/pro-card';
 import './index.less';
 import { useModel } from 'umi';
-import { message, Upload } from 'antd';
+import { message } from 'antd';
 import { updateUserInfo } from '@/pages/UsersTable/services';
 import { currentUser as getCurrentUserInfo } from '@/services';
-import { useState } from 'react';
-import type { RcFile } from 'antd/lib/upload';
-
-const picTmp = 'http://124.221.107.247:8080/';
 
 export default () => {
   const { initialState, setInitialState } = useModel('@@initialState');
-  const [imgUrl, setImgUrl] = useState<string>('');
   const getUserInfo = async () => {
     const data = await getCurrentUserInfo();
     if (data.code === 200 && data.success === true) {
-      setImgUrl(`${picTmp}${data.data.userInfo.pic}?${Date.now()}`);
       return data.data.userInfo;
     }
     return {};
@@ -127,49 +121,6 @@ export default () => {
               ]}
             />
           </ProForm>
-        </ProCard>
-        <ProCard title="人脸信息">
-          <Upload
-            action="http://124.221.107.247:8080/api/user/uploadpic"
-            method="POST"
-            name="image"
-            maxCount={1}
-            headers={{
-              Authorization: `Bearer ${
-                window.localStorage.getItem('token') || ''
-              }`,
-            }}
-            beforeUpload={(file: RcFile) => {
-              const isJpgOrPng =
-                file.type === 'image/jpeg' ||
-                file.type === 'image/jpg' ||
-                file.type === 'image/png';
-              if (!isJpgOrPng) {
-                message.error('只支持jpg、jpeg、png文件!');
-              }
-              const isLt2M = file.size / 1024 <= 500;
-              if (!isLt2M) {
-                message.error('文件不能超过500K!');
-              }
-              return isJpgOrPng && isLt2M;
-            }}
-            onChange={({ file }) => {
-              if (file.status === 'done') {
-                // 上传成功
-                message.success('上传人脸图片成功！');
-                setImgUrl(
-                  `${picTmp}${initialState?.currentUser?.pic}?${Date.now()}`,
-                );
-              } else if (file.status === 'error') {
-                // 上传失败
-                message.error('请检查图片中有清晰的人脸图片！');
-              }
-            }}
-          >
-            <div className="avatar">
-              <img src={imgUrl} alt="avatar" />
-            </div>
-          </Upload>
         </ProCard>
       </ProCard>
     </PageContainer>
