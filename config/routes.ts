@@ -23,45 +23,21 @@
         component: './DeviceInfoTable',
       },
       {
-        path: '/devops/deviced/ashboard',
-        name: '测温设备面板',
-        component: './Dashboard/DeviceBoard',
-      },
-      {
         path: '/devops/user/users',
         name: '用户管理',
         component: './UsersTable',
       },
-      {
-        name: '系统添加账户',
-        path: '/devops/user/register',
-        component: './user/register',
-      },
     ],
   },
   {
-    name: '其他',
+    name: '订单管理',
     path: '/situation',
     icon: 'Dashboard',
     routes: [
       {
-        path: '/situation/dashboard/school',
-        name: '校园监控面板',
-        icon: 'smile',
-        component: './Dashboard/SchoolBoard',
-      },
-      {
         path: '/situation/records',
-        name: '用户打卡信息',
+        name: '订单信息',
         component: './TempRecordsTable',
-      },
-      {
-        path: '/situation/yesterdayrecords',
-        component: './ErrorTempTable/Yesterday',
-      },
-      {
-        path: '/situation/todayrecords',
-        component: './ErrorTempTable/Today',
       },
     ],
   },

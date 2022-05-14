@@ -1,50 +1,81 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ProColumns } from '@ant-design/pro-table';
+// import ProTable from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
+import { useRef, useState } from 'react';
 import { getAllTempRecordList } from './services';
 
 export default () => {
+  const tableRef = useRef<any>(null);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const columns: ProColumns<any>[] = [
     {
-      title: '打卡记录编号',
+      title: '订单编号',
       key: 'id',
       fixed: 'left',
       dataIndex: 'id',
+      readonly: true,
     },
     {
-      title: '用户名',
+      readonly: true,
+      title: '时间',
+      key: 'date',
+      dataIndex: 'date',
+    },
+    {
+      title: '游戏名',
       key: 'name',
+      readonly: true,
       dataIndex: 'name',
     },
     {
-      title: '温度',
-      key: 'temp',
-      dataIndex: 'temp',
-      render: (_, record: any) => {
-        return <>{`${record.temp}°C`}</>;
-      },
+      title: '租赁时常',
+      readonly: true,
+      key: 'time',
+      dataIndex: 'time',
     },
     {
-      title: '状态',
-      key: 'state',
-      dataIndex: 'state',
-      valueEnum: {
-        0: { text: '正常', status: 'Success' },
-        1: { text: '异常', status: 'Error' },
-      },
+      title: '价格',
+      readonly: true,
+      key: 'mon',
+      dataIndex: 'mon',
     },
     {
-      title: '更新时间',
-      key: 'date',
-      dataIndex: 'date',
-      valueType: 'dateTime',
+      title: '操作',
+      valueType: 'option',
+      fixed: 'right',
+      render: (text, record, index, action) => [
+        <a
+          key="editable"
+          onClick={() => {
+            // console.log(record.id - 1);
+            // console.log(editableKeys);
+            action?.startEditable?.(record.id - 1);
+          }}
+        >
+          操作
+        </a>,
+      ],
     },
   ];
   return (
     <PageContainer>
       <ProTable
+        scroll={{ x: 1200 }}
         search={false}
+        actionRef={tableRef}
         columns={columns}
+        editable={{
+          editableKeys,
+          onChange: setEditableRowKeys,
+          onCancel: async () => {
+            await setEditableRowKeys([]);
+          },
+          actionRender: (row, config, dom) => [dom.cancel, dom.delete],
+        }}
+        pagination={{
+          size: 'default',
+        }}
         request={async (
           // 第一个参数 params 查询表单和 params 参数的结合
           // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范

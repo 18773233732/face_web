@@ -4,8 +4,8 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { omit } from 'lodash';
 import { EditableProTable } from '@ant-design/pro-table';
 import { useRef, useState } from 'react';
-import { getUserList, updateUserInfo } from './services';
 import { message } from 'antd';
+import { getUserList, updateUserInfo } from './services';
 
 export default () => {
   const tableRef = useRef<any>(null);
@@ -13,7 +13,6 @@ export default () => {
   const columns: ProColumns<any>[] = [
     {
       title: '用户编号',
-      width: 150,
       key: 'id',
       fixed: 'left',
       dataIndex: 'id',
@@ -21,68 +20,35 @@ export default () => {
     },
     {
       title: '用户名',
-      width: 150,
       key: 'name',
       dataIndex: 'name',
     },
     {
-      title: '手机',
-      key: 'phone',
-      dataIndex: 'phone',
-    },
-    {
-      title: '状态',
-      readonly: true,
-      key: 'state',
-      dataIndex: 'state',
-      valueEnum: {
-        1: { text: '在线', status: 'Success' },
-        0: { text: '离线', status: 'Default' },
-      },
-    },
-    {
-      title: '身份',
+      title: '权限',
       key: 'role',
       dataIndex: 'role',
-      readonly: true,
       valueEnum: {
-        0: { text: '学生' },
-        1: { text: '老师' },
-        2: { text: '管理员' },
+        0: { text: '管理员' },
+        1: { text: '普通用户' },
       },
     },
     {
-      title: '所属学院',
-      width: 150,
-      key: 'college',
-      dataIndex: 'college',
+      title: '性别',
+      key: 'gender',
+      dataIndex: 'gender',
+      valueEnum: {
+        0: { text: '男' },
+        1: { text: '女' },
+      },
     },
     {
-      title: '注册时间',
-      readonly: true,
-      key: 'date',
-      dataIndex: 'date',
-      valueType: 'dateTime',
-    },
-    {
-      title: '省份',
-      key: 'provinces',
-      dataIndex: 'provinces',
-    },
-    {
-      title: '市区',
-      key: 'city',
-      dataIndex: 'city',
-    },
-    {
-      title: '地区',
-      key: 'area',
-      dataIndex: 'area',
+      title: '交易量',
+      key: 'trading',
+      dataIndex: 'trading',
     },
     {
       title: '操作',
       valueType: 'option',
-      width: 150,
       fixed: 'right',
       render: (text, record, index, action) => [
         <a
@@ -101,7 +67,7 @@ export default () => {
   return (
     <PageContainer>
       <EditableProTable
-        scroll={{ x: 1800 }}
+        scroll={{ x: 1200 }}
         search={false}
         actionRef={tableRef}
         columns={columns}
@@ -122,7 +88,7 @@ export default () => {
               message.success('更新用户信息成功！');
               tableRef?.current?.reload();
             } else {
-              message.error('更新用户信息失败！');
+              // message.error('更新用户信息失败！');
             }
             await setEditableRowKeys([]);
           },

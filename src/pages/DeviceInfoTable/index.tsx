@@ -2,35 +2,36 @@ import { PageContainer } from '@ant-design/pro-layout';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getDeviceInfoList } from './services';
+import { useState } from 'react';
 
 export default () => {
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const columns: ProColumns<any>[] = [
     {
       title: '记录编号',
       key: 'id',
+      readonly: true,
       fixed: 'left',
       dataIndex: 'id',
     },
     {
       title: '游戏名',
       key: 'name',
+      readonly: true,
       dataIndex: 'name',
     },
     {
       title: '操作',
       valueType: 'option',
-      width: 150,
       fixed: 'right',
       render: (text, record, index, action) => [
         <a
           key="editable"
           onClick={() => {
-            // console.log(record.id - 1);
-            // console.log(editableKeys);
             action?.startEditable?.(record.id - 1);
           }}
         >
-          编辑
+          操作
         </a>,
       ],
     },
@@ -40,6 +41,14 @@ export default () => {
       <ProTable
         search={false}
         columns={columns}
+        editable={{
+          editableKeys,
+          onChange: setEditableRowKeys,
+          onCancel: async () => {
+            await setEditableRowKeys([]);
+          },
+          actionRender: (row, config, dom) => [dom.cancel, dom.delete],
+        }}
         request={async (
           // 第一个参数 params 查询表单和 params 参数的结合
           // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
