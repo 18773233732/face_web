@@ -15,26 +15,44 @@ export default () => {
       dataIndex: 'id',
     },
     {
-      title: '游戏名',
+      title: '姓名',
       key: 'name',
       readonly: true,
       dataIndex: 'name',
     },
     {
-      title: '操作',
-      valueType: 'option',
-      fixed: 'right',
-      render: (text, record, index, action) => [
-        <a
-          key="editable"
-          onClick={() => {
-            action?.startEditable?.(record.id - 1);
-          }}
-        >
-          操作
-        </a>,
-      ],
+      title: '电话',
+      key: 'phone',
+      readonly: true,
+      dataIndex: 'phone',
     },
+    {
+      title: '地区',
+      key: 'region',
+      readonly: true,
+      dataIndex: 'region',
+    },
+    {
+      title: '详细地址',
+      key: 'location',
+      readonly: true,
+      dataIndex: 'location',
+    },
+    // {
+    //   title: '操作',
+    //   valueType: 'option',
+    //   fixed: 'right',
+    //   render: (text, record, index, action) => [
+    //     <a
+    //       key="editable"
+    //       onClick={() => {
+    //         action?.startEditable?.(record.id - 1);
+    //       }}
+    //     >
+    //       操作
+    //     </a>,
+    //   ],
+    // },
   ];
   return (
     <PageContainer>

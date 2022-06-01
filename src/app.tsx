@@ -9,7 +9,7 @@ import { currentUser as queryCurrentUser } from './services';
 import defaultSettings from '../config/defaultSettings';
 import type { CurrentUser } from './entries';
 
-const loginPath = '/user/login';
+const loginPath = '/login';
 const registerPath = '/user/register';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -24,16 +24,16 @@ export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: CurrentUser;
   loading?: boolean;
-  fetchUserInfo: () => Promise<CurrentUser | undefined>;
+  fetchUserInfo: (id: number) => Promise<CurrentUser | undefined>;
 }> {
-  const fetchUserInfo = async () => {
+  const fetchUserInfo = async (id: number) => {
     try {
-      const msg = await queryCurrentUser();
-      if (isEmpty(msg.data.userInfo)) {
+      const msg = await queryCurrentUser({ id });
+      if (isEmpty(msg.data)) {
         history.push(loginPath);
         return undefined;
       }
-      return msg.data.userInfo;
+      return msg.data;
     } catch (error) {
       history.push(loginPath);
     }
@@ -42,9 +42,10 @@ export async function getInitialState(): Promise<{
   // 如果是登录页面，不执行
   if (
     history.location.pathname !== loginPath &&
-    history.location.pathname !== registerPath
+    history.location.pathname !== registerPath &&
+    history.location.pathname !== '/collectinfo'
   ) {
-    const currentUser = await fetchUserInfo();
+    const currentUser = await fetchUserInfo(-1);
     // console.log(currentUser);
     return {
       fetchUserInfo,
@@ -68,18 +69,20 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
-      const { location } = history;
       // 如果没有登录，重定向到 login
       if (
         !initialState?.currentUser?.id &&
         location.pathname !== loginPath &&
-        location.pathname !== registerPath
+        location.pathname !== registerPath &&
+        history.location.pathname !== '/collectinfo' &&
+        history.location.pathname !== '/'
       ) {
         // console.log(initialState);
         history.push(loginPath);
       }
     },
     menuHeaderRender: undefined,
+    pageTitleRender: false,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态

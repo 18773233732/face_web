@@ -4,22 +4,13 @@
 export interface CurrentUser {
   name: string;
   id: number;
-  date: string;
-  provinces: string;
-  city: string;
-  area: string;
-  pic: string;
-  phone: string;
-  state: number;
-  role: number;
+  access: string;
 }
 
 export interface GetCurrentUserResult {
   success: boolean;
   code: number;
-  data: {
-    userInfo: CurrentUser;
-  };
+  data: CurrentUser;
   errorMessage: string;
 }
 
@@ -33,7 +24,8 @@ export interface LoginResult {
   code: number;
   data: {
     token: string;
-    userInfo: CurrentUser;
+    id: string;
+    name: string;
   };
   errorMessage: string;
 }

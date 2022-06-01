@@ -7,6 +7,13 @@
  * https://pro.ant.design/docs/deploy
  */
 export default {
+  dev: {
+    '/api/': {
+      target: 'http://192.168.137.1:8012',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+  },
   test: {
     '/api/': {
       target: 'https://proapi.azurewebsites.net',

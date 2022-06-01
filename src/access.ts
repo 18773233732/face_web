@@ -8,6 +8,6 @@ export default function access(initialState: {
   const { currentUser } = initialState || {};
   return {
     //
-    admin: currentUser && currentUser.role === 2,
+    admin: currentUser && currentUser.access === 'admin',
   };
 }

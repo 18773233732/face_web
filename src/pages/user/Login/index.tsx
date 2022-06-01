@@ -26,8 +26,8 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<LoginResult>({} as any);
   const { initialState, setInitialState } = useModel('@@initialState');
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
+  const fetchUserInfo = async (id: number) => {
+    const userInfo = await initialState?.fetchUserInfo?.(id);
     console.log(userInfo, 1111);
     if (userInfo) {
       await setInitialState((s: any) => ({
@@ -41,17 +41,17 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await login({ ...values });
-      if (msg.data.userInfo?.id) {
+      if (msg.data.id) {
         message.success('登录成功');
         window.localStorage.setItem('token', msg.data.token);
-        await fetchUserInfo();
+        await fetchUserInfo(Number(msg.data.id));
         setUserLoginState(msg);
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         // const { query } = history.location;
         // const { redirect } = query as { redirect: string };
         // console.log(msg.data.token);
-        history.push('/');
+        history.push('/devops/device/info');
         return;
       } else {
         message.error('登录失败，请重试！');

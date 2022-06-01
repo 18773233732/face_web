@@ -5,7 +5,7 @@ import type {
 } from '../entries';
 
 export function getDeviceInfoList(params: GetAllDeviceInfoParams) {
-  return request<GetAllDeviceInfoResult>('/api/device/getAllDeviceInfo', {
+  return request<GetAllDeviceInfoResult>('/api/user/infoGet', {
     method: 'POST',
     data: params,
   });

@@ -37,7 +37,7 @@ request.interceptors.request.use((url, options) => {
       ...options,
       headers: {
         ...headers,
-        Authorization: `Bearer ${token}`,
+        Token: token,
         'Content-Type': 'application/json',
       },
     },

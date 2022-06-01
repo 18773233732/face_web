@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
@@ -65,12 +65,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-      {menu && (
-        <Menu.Item key="settings">
-          <SettingOutlined />
-          个人设置
-        </Menu.Item>
-      )}
       {menu && <Menu.Divider />}
 
       <Menu.Item key="logout">

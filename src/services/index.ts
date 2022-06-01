@@ -5,9 +5,10 @@ import request from '@/utils/request';
 // import { omit } from 'lodash';
 
 /** 获取当前的用户 GET /api/currentUser */
-export async function currentUser() {
-  return request<GetCurrentUserResult>('/api/user/getUserInfo', {
-    method: 'GET',
+export async function currentUser(params?: Record<string, any>) {
+  return request<GetCurrentUserResult>('/api/user/getInfo', {
+    method: 'POST',
+    data: params,
   });
 }
 
@@ -51,7 +52,7 @@ export async function outLogin(params?: Record<string, any>) {
 
 /** 登录接口 POST /api/login/account */
 export async function login(params: Record<string, any>) {
-  return request<LoginResult>('/api/user/login', {
+  return request<LoginResult>('/api/user/userLogin', {
     method: 'POST',
     data: params,
   });

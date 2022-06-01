@@ -3,13 +3,16 @@
     name: 'login',
     layout: false,
     hideInMenu: true,
-    path: '/user/login',
+    path: '/login',
     component: './user/Login',
   },
   {
-    path: '/account/settings',
+    name: 'collect',
+    layout: false,
+    title: 'collect',
     hideInMenu: true,
-    component: './user/update',
+    path: '/collectinfo',
+    component: './CollectInfo',
   },
   {
     name: '系统管理',
@@ -19,31 +22,19 @@
     routes: [
       {
         path: '/devops/device/info',
-        name: '游戏管理',
+        name: '信息管理',
         component: './DeviceInfoTable',
       },
-      {
-        path: '/devops/user/users',
-        name: '用户管理',
-        component: './UsersTable',
-      },
-    ],
-  },
-  {
-    name: '订单管理',
-    path: '/situation',
-    icon: 'Dashboard',
-    routes: [
-      {
-        path: '/situation/records',
-        name: '订单信息',
-        component: './TempRecordsTable',
-      },
+      // {
+      //   path: '/devops/user/users',
+      //   name: '用户管理',
+      //   component: './UsersTable',
+      // },
     ],
   },
   {
     path: '/',
-    redirect: '/situation/dashboard/school',
+    redirect: '/collectinfo',
   },
   {
     component: './404',
